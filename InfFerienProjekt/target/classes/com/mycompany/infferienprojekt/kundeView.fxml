@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.infferienprojekt.KundeController">
+   <children>
+      <ListView layoutX="14.0" layoutY="14.0" prefHeight="343.0" prefWidth="772.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ListView>
+      <Button layoutX="14.0" layoutY="374.0" mnemonicParsing="false" onAction="#btnAddKunde" prefHeight="50.0" prefWidth="140.0" text="Kunde hinzufügen">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="175.0" layoutY="374.0" mnemonicParsing="false" onAction="#btnEditKunde" prefHeight="50.0" prefWidth="140.0" text="Kunde bearbeiten">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="646.0" layoutY="536.0" mnemonicParsing="false" onAction="#btnHome" prefHeight="50.0" prefWidth="140.0" text="Menü">
+         <font>
+            <Font size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>
