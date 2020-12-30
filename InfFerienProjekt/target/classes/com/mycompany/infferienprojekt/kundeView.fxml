@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.infferienprojekt.KundeController">
    <children>
-      <ListView layoutX="14.0" layoutY="14.0" prefHeight="343.0" prefWidth="772.0">
+      <ListView fx:id="lvKundeDetail" layoutX="14.0" layoutY="14.0" prefHeight="343.0" prefWidth="772.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></ListView>

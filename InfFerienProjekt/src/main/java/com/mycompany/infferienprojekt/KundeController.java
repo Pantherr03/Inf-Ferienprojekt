@@ -12,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -20,15 +19,16 @@ import javafx.scene.input.MouseEvent;
  * @author Paul
  */
 public class KundeController implements Initializable {
-    
+
     @FXML
-     private ListView<String> lvKundeDetail;
+    private ListView<String> lvKundeDetail;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         if(App.getKunden() != null){
+         if(!(App.getKunden().isEmpty())){
              for(KundeModel k : App.getKunden()){
                  if(k.getKundenTyp().equals("Geschäftskunde")){
                      
@@ -44,11 +44,8 @@ public class KundeController implements Initializable {
              
          }
         
-        else{
-            System.out.println("es können noch keine Fahrzeuge abgebildet werden");
-        } 
     }    
-
+    
     @FXML
     private void btnAddKunde(ActionEvent event) throws IOException {
         App.setRoot("addKundeView");
@@ -60,7 +57,7 @@ public class KundeController implements Initializable {
 
     @FXML
     private void btnHome(ActionEvent event) throws IOException {
-        App.setRoot("mainView");
+        App.setRoot("mainVIew");
     }
-    
+
 }

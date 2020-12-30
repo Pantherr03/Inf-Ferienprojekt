@@ -28,9 +28,9 @@ public class App extends Application {
         newArrayLists();
     }
     private void newArrayLists(){
-        fahrzeuge = new ArrayList<FahrzeugModel>();
-        kunden = new ArrayList<KundeModel>();
-        vermietungen = new ArrayList<VermietungModel>();
+        fahrzeuge = new ArrayList<>();
+        kunden = new ArrayList<>();
+        vermietungen = new ArrayList<>();
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -43,6 +43,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        startObjects();
         launch();
     }
 
@@ -68,5 +69,10 @@ public class App extends Application {
     
     public static ArrayList<VermietungModel> getVermietungen(){
         return vermietungen;
+    }
+    public static void startObjects(){
+        fahrzeuge.add(new AutoModel("VW", "Golf", "rot", "HH TP 265", "Auto", false, false, 15.0, 23));
+        kunden.add(new GeschaeftsKundeModel("Diekmoorweg 34", "20.07.2003","0174 6253671", "Ben", "Bartel", "Hamburg", "Geschäftskunde"));
+        kunden.add(new PrivatKundeModel("110", "0174 6234671", "Peer", "Bartel", "Hamburg", "Privatkunde"));
     }
 }
