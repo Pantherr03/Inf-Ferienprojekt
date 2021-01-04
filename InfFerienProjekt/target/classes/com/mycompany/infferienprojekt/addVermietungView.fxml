@@ -9,15 +9,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.mycompany.eainf_rpg.AddVermietungController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.infferienprojekt.AddVermietungController">
    <children>
       <ListView fx:id="lvFahrzeugAuswahl" layoutX="566.0" layoutY="14.0" prefHeight="275.0" prefWidth="220.0" />
       <ListView fx:id="lvKundeAuswahl" layoutX="566.0" layoutY="311.0" prefHeight="275.0" prefWidth="220.0" />
-      <DatePicker fx:id="dpStartDatum" layoutX="227.0" layoutY="243.0" />
-      <DatePicker fx:id="dpEnddatum" layoutX="227.0" layoutY="288.0" />
-      <Label layoutX="370.0" layoutY="226.0" text="Startdatum" />
-      <Label layoutX="373.0" layoutY="272.0" text="Enddatum" />
+      <DatePicker fx:id="dpStartDatum" layoutX="227.0" layoutY="264.0" />
+      <DatePicker fx:id="dpEnddatum" layoutX="227.0" layoutY="312.0" />
+      <Label layoutX="370.0" layoutY="248.0" text="Startdatum" />
+      <Label layoutX="373.0" layoutY="296.0" text="Enddatum" />
       <Button layoutX="14.0" layoutY="536.0" mnemonicParsing="false" onAction="#btnHome" prefHeight="50.0" prefWidth="140.0" text="Menü">
          <font>
             <Font size="22.0" />
@@ -26,7 +25,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <ChoiceBox fx:id="choiceZeitStart" layoutX="409.0" layoutY="243.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="choiceZeitEnde" layoutX="409.0" layoutY="288.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="choiceZeitStart" layoutX="409.0" layoutY="264.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="choiceZeitEnde" layoutX="409.0" layoutY="312.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

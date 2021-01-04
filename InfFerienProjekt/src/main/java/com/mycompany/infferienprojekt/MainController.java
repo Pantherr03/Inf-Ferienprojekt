@@ -64,7 +64,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void btnToVermietungenDetail(ActionEvent event) throws IOException {
-        App.setRoot("vermietungenView");
+        App.setRoot("vermietungView");
     }
 
 }
