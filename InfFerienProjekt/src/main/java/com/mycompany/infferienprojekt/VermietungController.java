@@ -7,6 +7,7 @@ package com.mycompany.infferienprojekt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,8 +31,10 @@ public class VermietungController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         if(App.vermietungen != null){
             for(VermietungModel v : App.getVermietungen()){
-                String temp1 = v.getStartDatum().toString();
-                String temp2 = v.getEndDatum().toString();
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                String temp1 = v.getStartDatum().format(format);
+                String temp2 = v.getEndDatum().format(format);
+                
                 lvVermietungDetail.getItems().add("Startdatum: " + temp1 + " // Enddatum: " + temp2 + " // Fahrzeugtyp: " + v.getFahrzeug().getTyp() + " // Modell: " + v.getFahrzeug().getModell() + " // Farbe: " + v.getFahrzeug().getFarbe() + " // Kunde: " + v.getKunde().getVorname()+ " " + v.getKunde().getNachname() + " // Kundentyp: " + v.getKunde().getKundenTyp());
             }
         }

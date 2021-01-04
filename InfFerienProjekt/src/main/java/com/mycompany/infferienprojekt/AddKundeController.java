@@ -66,7 +66,6 @@ public class AddKundeController implements Initializable {
         }
         Integer i = App.kunden.size() - 1;
         System.out.println("Vorname: " + App.kunden.get(i).getVorname() + " // Nachname: " + App.kunden.get(i).getNachname() + " // Kundentyp: " + App.kunden.get(i).getKundenTyp() + " // Geburtsdatum: " + App.kunden.get(i).getGeburtsdatum() + " // Geburtsort: " + App.kunden.get(i).getGeburtsort());
-        System.out.println(App.kunden);
     }
 
     @FXML

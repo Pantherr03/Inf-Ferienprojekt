@@ -11,13 +11,19 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.infferienprojekt.AddVermietungController">
    <children>
-      <ListView fx:id="lvFahrzeugAuswahl" layoutX="566.0" layoutY="14.0" onMouseClicked="#selFahrzeug" prefHeight="275.0" prefWidth="220.0" />
-      <ListView fx:id="lvKundeAuswahl" layoutX="566.0" layoutY="311.0" onMouseClicked="#selKunde" prefHeight="275.0" prefWidth="220.0" />
+      <ListView fx:id="lvFahrzeugAuswahl" layoutX="566.0" layoutY="14.0" onMouseClicked="#selFahrzeug" prefHeight="250.0" prefWidth="220.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ListView>
+      <ListView fx:id="lvKundeAuswahl" layoutX="566.0" layoutY="311.0" onMouseClicked="#selKunde" prefHeight="250.0" prefWidth="220.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ListView>
       <DatePicker fx:id="dpStartDatum" layoutX="286.0" layoutY="264.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></DatePicker>
-      <DatePicker fx:id="dpEnddatum" layoutX="286.0" layoutY="312.0">
+      <DatePicker fx:id="dpEndDatum" layoutX="286.0" layoutY="312.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></DatePicker>

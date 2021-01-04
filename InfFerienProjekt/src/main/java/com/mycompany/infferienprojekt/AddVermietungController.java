@@ -69,9 +69,10 @@ public class AddVermietungController implements Initializable {
     private void btnAddVermietung(ActionEvent event) {
         choiceToDateStart();
         choiceToDateEnde();
-        LocalDateTime temp1 = new LocalDateTime.of(dpStartDatum.getValue(), TS) ; 
-        LocalDateTime temp2 = new LocalDateTime.of(dpEndDatum.getValue(), TE);
+        LocalDateTime temp1 = LocalDateTime.of(dpStartDatum.getValue(), TS) ; 
+        LocalDateTime temp2 = LocalDateTime.of(dpEndDatum.getValue(), TE);
         App.vermietungen.add(new VermietungModel(temp1, temp2, selKunde, selFahrzeug));
+        System.out.println("Start: " + temp1 + " // Ende: " + temp2 + " // Kunde: " + selKunde.getVorname() + " " + selKunde.getNachname() + " // Typ: " + selFahrzeug.getTyp());
     }
     @FXML
     private void selFahrzeug(MouseEvent event) {
