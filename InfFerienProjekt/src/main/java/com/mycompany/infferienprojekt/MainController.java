@@ -48,6 +48,13 @@ public class MainController implements Initializable {
         else{
                 System.out.println("es sind noch keine Kunden vorhanden");
         }
+        if(App.getVermietungen() != null){
+            for(VermietungModel v : App.getVermietungen()){
+                String temp1 = v.getStartDatum().toString();
+                String temp2 = v.getEndDatum().toString();
+                lvVermietungen.getItems().add("Startdatum: " + temp1 + " // Enddatum: " + temp2 + " // Fahrzeugtyp: " + v.getFahrzeug().getTyp() + " // Modell: " + v.getFahrzeug().getModell() + " // Kunde: " + v.getKunde().getVorname()+ " " + v.getKunde().getNachname());
+            }
+        }
     
     }    
         
