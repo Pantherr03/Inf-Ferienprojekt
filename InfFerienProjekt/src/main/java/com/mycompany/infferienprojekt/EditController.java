@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -35,6 +36,8 @@ public class EditController implements Initializable {
     private CheckBox checkBoxEdit;
     @FXML
     private Label labelEdit;
+    @FXML
+    private ChoiceBox<String> choiceTyp;
 
     /**
      * Initializes the controller class.
@@ -43,6 +46,7 @@ public class EditController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         hideCheckBox();
         fillListView();
+        fillChoiceBox();
     }    
 
     @FXML
@@ -101,6 +105,44 @@ public class EditController implements Initializable {
                         String temp2 = FahrzeugController.selectedFahrzeug.getStundenkosten() + "";
                         txtEdit.setText(temp2);
                     break;
+            }    
+            case "GeschaeftsKunde": 
+                GeschaeftsKundeModel g = (GeschaeftsKundeModel) KundeController.selectedKunde;
+                switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
+                    case 0: 
+                        labelEdit.setText("Vorname:");
+                        txtEdit.setText(g.getVorname());
+                    break;
+                    
+                    case 1: 
+                        labelEdit.setText("Nachname:");
+                        txtEdit.setText(g.getNachname());
+                    break;
+                    
+                    case 2: 
+                        labelEdit.setText("Geburtsort:");
+                        txtEdit.setText(g.getGeburtsort());
+                    break;
+                    
+                    case 3: 
+                        labelEdit.setText("Geburtsdatum:");
+                        txtEdit.setText(g.getGeburtsdatum());
+                    break;
+                    
+                    case 4: 
+                        showChoiceBox();
+                        labelEdit.setText("Kundentyp:");
+                    break;
+                    
+                    case 5: 
+                        labelEdit.setText("Arbeitsadresse:");
+                        txtEdit.setText(g.getArbeitsAdresse());
+                    break;
+                    
+                    case 6: 
+                        labelEdit.setText("Arbeitstelefonnummer:");
+                        txtEdit.setText(g.getArbeitsTelefonnummer());
+                    break;
             }
         } 
     }
@@ -112,6 +154,9 @@ public class EditController implements Initializable {
         txtEdit.setOpacity(1);
         txtEdit.setDisable(false);
         txtEdit.toFront();
+        choiceTyp.toBack();
+        choiceTyp.setOpacity(0);
+        choiceTyp.setDisable(true);
     }
     
     private void hideTextField(){
@@ -121,8 +166,24 @@ public class EditController implements Initializable {
         txtEdit.setOpacity(0);
         txtEdit.setDisable(true);
         txtEdit.toBack();
+        choiceTyp.toBack();
+        choiceTyp.setOpacity(0);
+        choiceTyp.setDisable(true);
     }
     
+    private void showChoiceBox(){
+        checkBoxEdit.setOpacity(0);
+        checkBoxEdit.setDisable(true);
+        checkBoxEdit.toBack();
+        txtEdit.setOpacity(0);
+        txtEdit.setDisable(true);
+        txtEdit.toBack();
+        choiceTyp.toFront();
+        choiceTyp.setOpacity(1);
+        choiceTyp.setDisable(false);
+         
+        
+    }
     
     @FXML
     private void btnEditField(ActionEvent event) {
@@ -130,44 +191,111 @@ public class EditController implements Initializable {
 
     @FXML
     private void btnEditDone(ActionEvent event) {
-        switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
-            case 0: 
-                FahrzeugController.selectedFahrzeug.setHersteller(txtEdit.getText());
-            break;
+        switch(App.getOriginTyp()){
+            case "Fahrzeug":
+                switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
+                    case 0: 
+                        FahrzeugController.selectedFahrzeug.setHersteller(txtEdit.getText());
+                    break;
+
+                    case 1: 
+                        FahrzeugController.selectedFahrzeug.setModell(txtEdit.getText());
+                    break;
+
+                    case 2: 
+                        FahrzeugController.selectedFahrzeug.setFarbe(txtEdit.getText());
+                    break;
+
+                    case 3: 
+                        FahrzeugController.selectedFahrzeug.setKennzeichen(txtEdit.getText());
+                    break;
+
+                    case 4: 
+                        FahrzeugController.selectedFahrzeug.setTyp(txtEdit.getText());
+                    break;
+
+                    case 5: 
+                        int temp1 = Integer.parseInt(txtEdit.getText());
+                        FahrzeugController.selectedFahrzeug.setFahrzeugnummer(temp1);
+                    break;
+
+                    case 6: 
+                        FahrzeugController.selectedFahrzeug.setInReparatur(checkBoxEdit.isSelected());
+                    break;
+
+                    case 7: 
+                        FahrzeugController.selectedFahrzeug.setInBenutzung(checkBoxEdit.isSelected());
+                    break;
+
+                    case 8: 
+                        double temp2 = Double.parseDouble(txtEdit.getText());
+                        FahrzeugController.selectedFahrzeug.setStundenkosten(temp2);
+                    break;
+                }
+            case "GeschaeftsKunde":
+                GeschaeftsKundeModel g = (GeschaeftsKundeModel) KundeController.selectedKunde;
+                switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
+                    case 0:
+                        KundeController.selectedKunde.setVorname(txtEdit.getText());
+                    break;
+                    
+                    case 1:
+                        KundeController.selectedKunde.setNachname(txtEdit.getText());
+                    break;
+                    
+                    case 2:
+                        KundeController.selectedKunde.setGeburtsort(txtEdit.getText());
+                    break;
+                    
+                    case 3:
+                        KundeController.selectedKunde.setGeburtsdatum(txtEdit.getText());
+                    break;
+                    
+                    case 4: 
+                        g.setKundenTyp(choiceTyp.getValue());
+                    break;
+                    
+                    case 5:
+                        g.setArbeitsAdresse(txtEdit.getText());
+                    break;
+                    
+                    case 6:
+                        g.setArbeitsTelefonnummer(txtEdit.getText());
+                    break;
+                }
+            break; 
             
-            case 1: 
-                FahrzeugController.selectedFahrzeug.setModell(txtEdit.getText());
-            break;
+            case "PrivatKunde":
+                PrivatKundeModel p = (PrivatKundeModel) KundeController.selectedKunde;
+                switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
+                    case 0:
+                        KundeController.selectedKunde.setVorname(txtEdit.getText());
+                    break;
+                    
+                    case 1:
+                        KundeController.selectedKunde.setNachname(txtEdit.getText());
+                    break;
+                    
+                    case 2:
+                        KundeController.selectedKunde.setGeburtsort(txtEdit.getText());
+                    break;
+                    
+                    case 3:
+                        KundeController.selectedKunde.setGeburtsdatum(txtEdit.getText());
+                    break;
+                    
+                    case 4:
+                       
+                    break;
+                    
+                    case 5:
+                        p.setSicherheitsKontakt(txtEdit.getText());
+                    break;
+                }
+            break; 
             
-            case 2: 
-                FahrzeugController.selectedFahrzeug.setFarbe(txtEdit.getText());
-            break;
             
-            case 3: 
-                FahrzeugController.selectedFahrzeug.setKennzeichen(txtEdit.getText());
-            break;
-            
-            case 4: 
-                FahrzeugController.selectedFahrzeug.setTyp(txtEdit.getText());
-            break;
-            
-            case 5: 
-                int temp1 = Integer.parseInt(txtEdit.getText());
-                FahrzeugController.selectedFahrzeug.setFahrzeugnummer(temp1);
-            break;
-            
-            case 6: 
-                FahrzeugController.selectedFahrzeug.setInReparatur(checkBoxEdit.isSelected());
-            break;
-            
-            case 7: 
-                FahrzeugController.selectedFahrzeug.setInBenutzung(checkBoxEdit.isSelected());
-            break;
-            
-            case 8: 
-                double temp2 = Double.parseDouble(txtEdit.getText());
-                FahrzeugController.selectedFahrzeug.setStundenkosten(temp2);
-            break;
+                
         }
         fillListView();
         txtEdit.clear();
@@ -247,6 +375,10 @@ public class EditController implements Initializable {
             default:
                 break;
         }
+    }
+    private void fillChoiceBox(){
+        choiceTyp.getItems().add("Geschäftskunde");
+        choiceTyp.getItems().add("Privatkunde");
     }
     
     private void displayInListView(){

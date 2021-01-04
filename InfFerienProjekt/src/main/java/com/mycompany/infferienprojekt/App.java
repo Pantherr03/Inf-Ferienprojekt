@@ -84,8 +84,8 @@ public class App extends Application {
     
     public static void startObjects(){
         fahrzeuge.add(new AutoModel("VW", "Golf", "rot", "HH TP 265", "Auto", false, false, 15.0, 23));
-        kunden.add(new GeschaeftsKundeModel("Diekmoorweg 34", "20.07.2003","0174 6253671", "Ben", "Bartel", "Hamburg", "Geschäftskunde"));
-        kunden.add(new PrivatKundeModel("110", "0174 6234671", "Peer", "Bartel", "Hamburg", "Privatkunde"));
+        kunden.add(new GeschaeftsKundeModel("Diekmoorweg 34", "0174 6253671", "20.07.2003", "Ben", "Bartel", "Hamburg", "Geschäftskunde"));
+        kunden.add(new PrivatKundeModel("110", "08.09.2003" , "Paul", "Kern", "Hamburg", "Privatkunde"));
     }
     
 }
