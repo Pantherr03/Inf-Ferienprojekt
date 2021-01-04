@@ -19,7 +19,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="170.0" layoutY="350.0" mnemonicParsing="false" onAction="#btnEditFahrzeug" prefHeight="50.0" prefWidth="140.0" text="Auswahl bearbeiten">
+      <Button fx:id="EditFahrzeug" layoutX="170.0" layoutY="350.0" mnemonicParsing="false" onAction="#btnEditFahrzeug" prefHeight="50.0" prefWidth="140.0" text="Auswahl bearbeiten">
          <font>
             <Font size="13.0" />
          </font>

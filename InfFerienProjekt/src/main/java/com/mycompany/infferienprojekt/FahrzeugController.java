@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
@@ -24,12 +25,16 @@ public class FahrzeugController implements Initializable {
 
     @FXML
     private ListView<String> lvFahrzeugDetail;
+    static FahrzeugModel selectedFahrzeug;
+    @FXML
+    private Button EditFahrzeug;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        EditFahrzeug.setDisable(true);
          if(App.getFahrzeuge() != null){
             for(FahrzeugModel f : App.getFahrzeuge()){
                  lvFahrzeugDetail.getItems().add("Fahrzeugtyp: " + f.getTyp() + " // Hersteller: " + f.getHersteller() + " // Modell: " + f.getModell() + " // Farbe: " + f.getFarbe() + " // Kennzeichen: " + f.getKennzeichen() + " // Stundenkosten: " + f.getStundenkosten() + " // Nummer: " + f.getFahrzeugnummer() + " // In Benutzung: " + f.getInBenutzung() + " // In Reparatur: " + f.getInReparatur());
@@ -42,6 +47,8 @@ public class FahrzeugController implements Initializable {
 
     @FXML
     private void selFahrzeugEdit(MouseEvent event) {
+        EditFahrzeug.setDisable(false);
+        
     }
 
     @FXML
@@ -51,7 +58,10 @@ public class FahrzeugController implements Initializable {
 
     @FXML
     private void btnEditFahrzeug(ActionEvent event) throws IOException {
-        App.setRoot("editFahrzegView");
+        int temp1 = lvFahrzeugDetail.getSelectionModel().getSelectedIndex();
+        selectedFahrzeug = App.fahrzeuge.get(temp1);
+        App.setOriginTyp("Fahrzeug");
+        App.setRoot("editView");
     }
 
     @FXML

@@ -23,6 +23,10 @@ public class VermietungController implements Initializable {
 
     @FXML
     private ListView<String> lvVermietungDetail;
+    
+    public static VermietungModel selectedVermietung;
+    
+    String typ;
 
     /**
      * Initializes the controller class.
@@ -49,12 +53,34 @@ public class VermietungController implements Initializable {
     }
 
     @FXML
-    private void btnEditVermietung(ActionEvent event) {
+    private void btnEditVermietung(ActionEvent event) throws IOException {
+        int temp1 = lvVermietungDetail.getSelectionModel().getSelectedIndex();
+        selectedVermietung = App.vermietungen.get(temp1);
+        App.setOriginTyp("Vermietung");
+        
+        App.setRoot("editView");
     }
+
+    
 
     @FXML
     private void btnHome(ActionEvent event) throws IOException {
         App.setRoot("mainVIew");
+    }
+    public static VermietungModel getSelectedVermietung() {
+        return selectedVermietung;
+    }
+
+    public void setSelectedVermietung(VermietungModel selectedVermietung) {
+        this.selectedVermietung = selectedVermietung;
+    }
+
+    public String getTyp() {
+        return typ;
+    }
+
+    public void setTyp(String typ) {
+        this.typ = typ;
     }
     
 }

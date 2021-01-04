@@ -3,6 +3,7 @@ com\mycompany\infferienprojekt\AddVermietungController.class
 com\mycompany\infferienprojekt\VermietungModel.class
 com\mycompany\infferienprojekt\VanModel.class
 com\mycompany\infferienprojekt\MainController.class
+com\mycompany\infferienprojekt\EditController.class
 module-info.class
 com\mycompany\infferienprojekt\AddKundeController.class
 com\mycompany\infferienprojekt\AutoModel.class

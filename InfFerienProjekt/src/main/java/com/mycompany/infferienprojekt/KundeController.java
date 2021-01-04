@@ -22,6 +22,7 @@ public class KundeController implements Initializable {
 
     @FXML
     private ListView<String> lvKundeDetail;
+    static KundeModel selectedKunde;
 
     /**
      * Initializes the controller class.
@@ -52,7 +53,16 @@ public class KundeController implements Initializable {
     }
 
     @FXML
-    private void btnEditKunde(ActionEvent event) {
+    private void btnEditKunde(ActionEvent event) throws IOException {
+        int temp1 = lvKundeDetail.getSelectionModel().getSelectedIndex();
+        selectedKunde = App.kunden.get(temp1);
+        if(selectedKunde.getKundenTyp().equals("Geschäftskunde")){
+            App.setOriginTyp("GeschaeftsKunde");
+        }
+        else if(selectedKunde.getKundenTyp().equals("Privatkunde")){
+            App.setOriginTyp("PrivatKunde");
+         }
+        App.setRoot("editView");
     }
 
     @FXML

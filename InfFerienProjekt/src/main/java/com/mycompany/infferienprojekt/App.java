@@ -18,6 +18,7 @@ public class App extends Application {
     static ArrayList<FahrzeugModel> fahrzeuge;
     static ArrayList<KundeModel> kunden;
     static ArrayList<VermietungModel> vermietungen;
+    static String originTyp;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -71,6 +72,15 @@ public class App extends Application {
     public static ArrayList<VermietungModel> getVermietungen(){
         return vermietungen;
     }
+
+    public static String getOriginTyp() {
+        return originTyp;
+    }
+
+    public static void setOriginTyp(String originTyp) {
+        App.originTyp = originTyp;
+    }
+    
     
     public static void startObjects(){
         fahrzeuge.add(new AutoModel("VW", "Golf", "rot", "HH TP 265", "Auto", false, false, 15.0, 23));
