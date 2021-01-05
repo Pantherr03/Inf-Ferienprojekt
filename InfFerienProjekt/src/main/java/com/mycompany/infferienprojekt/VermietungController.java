@@ -26,6 +26,7 @@ public class VermietungController implements Initializable {
     
     public static VermietungModel selectedVermietung;
     
+    static  int selVermietungIndex;
 
     /**
      * Initializes the controller class.
@@ -53,8 +54,9 @@ public class VermietungController implements Initializable {
 
     @FXML
     private void btnEditVermietung(ActionEvent event) throws IOException {
-        int temp1 = lvVermietungDetail.getSelectionModel().getSelectedIndex();
+       int temp1 = lvVermietungDetail.getSelectionModel().getSelectedIndex();
         selectedVermietung = App.vermietungen.get(temp1);
+        selVermietungIndex = temp1;
         App.setOriginTyp("Vermietung");
         
         App.setRoot("editView");

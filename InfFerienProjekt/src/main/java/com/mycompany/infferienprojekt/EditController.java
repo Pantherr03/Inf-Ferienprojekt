@@ -44,12 +44,36 @@ public class EditController implements Initializable {
     LocalTime T;
     int selectedIndex;
     
+    int indexInLs;
+    
+    
+    //Das gewählte Objekt wird hier gespeichert und wenn man die View verlässt wird das entsprechende Objekt in der App.fahrzeuge mit dem 
+    //hierigen ersetzt. 
+    FahrzeugModel fahrz;
+    GeschaeftsKundeModel gKunde;
+    PrivatKundeModel pKunde;
+    VermietungModel verm;
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //WICHTIG
+        fahrz = FahrzeugController.selectedFahrzeug;
+        if(KundeController.selectedKunde != null)
+            switch(KundeController.selectedKunde.getKundenTyp()){
+                case "GeschaeftsKunde":
+                    gKunde = (GeschaeftsKundeModel) KundeController.selectedKunde;
+                break;
+
+                case "PrivatKunde":
+                    pKunde = (PrivatKundeModel) KundeController.selectedKunde;
+                break;
+            }
+        verm = VermietungController.selectedVermietung;
+        
         showTextField();
         fillListView();
         fillChoiceBox();
@@ -58,155 +82,197 @@ public class EditController implements Initializable {
 
     @FXML
     private void selDone(MouseEvent event) {
+        indexInLs = lvEditChoice.getSelectionModel().getSelectedIndex();
         showTextField();
-        switch(App.getOriginTyp()){
-            case "Fahrzeug": 
-                switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
-                    case 0: 
-                        labelEdit.setText("Hersteller:");
-                        txtEdit.setText(FahrzeugController.selectedFahrzeug.getHersteller());
-                        selectedIndex = 0;
-                        System.out.println(selectedIndex);
-                    break;
-                    
-                    case 1: 
-                        labelEdit.setText("Modell:");
-                        txtEdit.setText(FahrzeugController.selectedFahrzeug.getModell());
-                        selectedIndex = 1;
-                        System.out.println(selectedIndex);
-                    break;
-                    
-                    case 2: 
-                        labelEdit.setText("Farbe:");
-                        txtEdit.setText(FahrzeugController.selectedFahrzeug.getFarbe());
-                        System.out.println(FahrzeugController.selectedFahrzeug.getFarbe());
-                        selectedIndex = 2;
-                        System.out.println(selectedIndex);
-                    break;
-                    
-                    case 3: 
-                        labelEdit.setText("Kennzeichen:");
-                        txtEdit.setText(FahrzeugController.selectedFahrzeug.getKennzeichen());
-                    break;
-                    
-                    case 4: 
-                        labelEdit.setText("Fahrzeugtyp:");
-                        txtEdit.setText(FahrzeugController.selectedFahrzeug.getTyp());
-                    break;
-                    
-                    case 5: 
-                        labelEdit.setText("Fahrzeugnummer:");
-                        String temp1 = FahrzeugController.selectedFahrzeug.getFahrzeugnummer() + "";
-                        txtEdit.setText(temp1);
-                    break;
-                    
-                    case 6: 
-                        labelEdit.setText("");
-                        showCheckBox();
-                        checkBoxEdit.setText("In Reparatur");
-                        checkBoxEdit.setSelected(FahrzeugController.selectedFahrzeug.getInReparatur());
-                    break;
-                    
-                    case 7: 
-                        labelEdit.setText("");
-                        showCheckBox();
-                        checkBoxEdit.setText("In Benutzung");
-                        checkBoxEdit.setSelected(FahrzeugController.selectedFahrzeug.getInBenutzung());
-                    break;
-                    
-                    case 8:
-                        labelEdit.setText("Stundenkosten:");
-                        String temp2 = FahrzeugController.selectedFahrzeug.getStundenkosten() + "";
-                        txtEdit.setText(temp2);
-                    break;
-                }    
-            break;
-            
-            case "GeschaeftsKunde": 
-                GeschaeftsKundeModel g = (GeschaeftsKundeModel) KundeController.selectedKunde;
-                switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
-                    case 0: 
-                        labelEdit.setText("Vorname:");
-                        txtEdit.setText(g.getVorname());
-                    break;
-                    
-                    case 1: 
-                        labelEdit.setText("Nachname:");
-                        txtEdit.setText(g.getNachname());
-                    break;
-                    
-                    case 2: 
-                        labelEdit.setText("Geburtsort:");
-                        txtEdit.setText(g.getGeburtsort());
-                    break;
-                    
-                    case 3: 
-                        labelEdit.setText("Geburtsdatum:");
-                        txtEdit.setText(g.getGeburtsdatum());
-                    break;
-                    
-                    case 4: 
-                        showChoiceBox();
-                        labelEdit.setText("Kundentyp:");
-                    break;
-                    
-                    case 5: 
-                        labelEdit.setText("Arbeitsadresse:");
-                        txtEdit.setText(g.getArbeitsAdresse());
-                    break;
-                    
-                    case 6: 
-                        labelEdit.setText("Arbeitstelefonnummer:");
-                        txtEdit.setText(g.getArbeitsTelefonnummer());
-                    break;
-                }
-            break;
-            
+        switch(App.getListViewModus()){
             case "Vermietung":
-                int e = lvEditChoice.getSelectionModel().getSelectedIndex();
-                VermietungModel x = VermietungController.selectedVermietung;
-                switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
-                    case 0: 
-                        dpEdit.setValue(null);
-                        showDatePicker();
-                        labelEdit.setText("Startdatum:");
-                        dpEdit.setValue(x.getStartDatum().toLocalDate());
+                switch(App.getOriginTyp()){
+                    case "Fahrzeug": 
+                        switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
+                            case 0: 
+                                labelEdit.setText("Hersteller:");
+                                txtEdit.setText(fahrz.getHersteller());
+                                selectedIndex = 0;
+                            break;
+
+                            case 1: 
+                                labelEdit.setText("Modell:");
+                                txtEdit.setText(fahrz.getModell());
+                                selectedIndex = 1;
+                            break;
+
+                            case 2: 
+                                labelEdit.setText("Farbe:");
+                                txtEdit.setText(fahrz.getFarbe());
+                                selectedIndex = 2;
+                            break;
+
+                            case 3: 
+                                labelEdit.setText("Kennzeichen:");
+                                txtEdit.setText(fahrz.getKennzeichen());
+                            break;
+
+                            case 4: 
+                                labelEdit.setText("Fahrzeugtyp:");
+                                txtEdit.setText(fahrz.getTyp());
+                            break;
+
+                            case 5: 
+                                labelEdit.setText("Fahrzeugnummer:");
+                                String temp1 = fahrz.getFahrzeugnummer() + "";
+                                txtEdit.setText(temp1);
+                            break;
+
+                            case 6: 
+                                labelEdit.setText("");
+                                showCheckBox();
+                                checkBoxEdit.setText("In Reparatur");
+                                checkBoxEdit.setSelected(fahrz.getInReparatur());
+                            break;
+
+                            case 7: 
+                                labelEdit.setText("");
+                                showCheckBox();
+                                checkBoxEdit.setText("In Benutzung");
+                                checkBoxEdit.setSelected(fahrz.getInBenutzung());
+                            break;
+
+                            case 8:
+                                labelEdit.setText("Stundenkosten:");
+                                String temp2 = fahrz.getStundenkosten() + "";
+                                txtEdit.setText(temp2);
+                            break;
+                        }    
                     break;
-                    
-                    case 1: 
-                        dpEdit.setValue(null);
-                        showDatePicker();
-                        labelEdit.setText("Enddatum:");
-                        dpEdit.setValue(x.getEndDatum().toLocalDate());
+
+                    case "GeschaeftsKunde": 
+                        switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
+                            case 0: 
+                                labelEdit.setText("Vorname:");
+                                txtEdit.setText(gKunde.getVorname());
+                            break;
+
+                            case 1: 
+                                labelEdit.setText("Nachname:");
+                                txtEdit.setText(gKunde.getNachname());
+                            break;
+
+                            case 2: 
+                                labelEdit.setText("Geburtsort:");
+                                txtEdit.setText(gKunde.getGeburtsort());
+                            break;
+
+                            case 3: 
+                                labelEdit.setText("Geburtsdatum:");
+                                txtEdit.setText(gKunde.getGeburtsdatum());
+                            break;
+
+                            case 4: 
+                                showChoiceBox();
+                                labelEdit.setText("Kundentyp:");
+                            break;
+
+                            case 5: 
+                                labelEdit.setText("Arbeitsadresse:");
+                                txtEdit.setText(gKunde.getArbeitsAdresse());
+                            break;
+
+                            case 6: 
+                                labelEdit.setText("Arbeitstelefonnummer:");
+                                txtEdit.setText(gKunde.getArbeitsTelefonnummer());
+                            break;
+                        }
                     break;
-                    
-                    case 2: 
-                        labelEdit.setText("Kunde:");
-                        txtEdit.setText(x.getKunde().getVorname() + " " + App.vermietungen.get(e).getKunde().getNachname());
-                        App.setListView("Kunden");
+
+                    case "PrivatKunde": 
+                        switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
+                            case 0: 
+                                labelEdit.setText("Vorname:");
+                                txtEdit.setText(pKunde.getVorname());
+                            break;
+
+                            case 1: 
+                                labelEdit.setText("Nachname:");
+                                txtEdit.setText(pKunde.getNachname());
+                            break;
+
+                            case 2: 
+                                labelEdit.setText("Geburtsort:");
+                                txtEdit.setText(pKunde.getGeburtsort());
+                            break;
+
+                            case 3: 
+                                labelEdit.setText("Geburtsdatum:");
+                                txtEdit.setText(pKunde.getGeburtsdatum());
+                            break;
+
+                            case 4: 
+                                showChoiceBox();
+                                labelEdit.setText("Kundentyp:");
+                            break;
+
+                            case 5: 
+                                labelEdit.setText("Sicherheitskontakt:");
+                                txtEdit.setText(pKunde.getSicherheitsKontakt());
+                            break;
+                        }
                     break;
-                    
-                    case 3: 
-                        labelEdit.setText("Fahrzeug:");
-                        showFahrzeugeInView();
-                        txtEdit.setText(x.getFahrzeug().getHersteller() + " " + App.vermietungen.get(e).getFahrzeug().getModell());
-                        App.setListView("Fahrzeuge");
+
+
+                    case "Vermietung":
+                        int e = lvEditChoice.getSelectionModel().getSelectedIndex();
+                        switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
+                            case 0: 
+                                dpEdit.setValue(null);
+                                showDatePicker();
+                                labelEdit.setText("Startdatum:");
+                                dpEdit.setValue(verm.getStartDatum().toLocalDate());
+                            break;
+
+                            case 1: 
+                                dpEdit.setValue(null);
+                                showDatePicker();
+                                labelEdit.setText("Enddatum:");
+                                dpEdit.setValue(verm.getEndDatum().toLocalDate());
+                            break;
+
+                            case 2: 
+                                labelEdit.setText("Kunde:");
+                                txtEdit.setText(verm.getKunde().getVorname() + " " + verm.getKunde().getNachname());
+                                App.setListViewModus("Kunden");
+                            break;
+
+                            case 3: 
+                                labelEdit.setText("Fahrzeug:");
+                                showFahrzeugeInView();
+                                txtEdit.setText(verm.getFahrzeug().getHersteller() + " " + verm.getFahrzeug().getModell());
+                                App.setListViewModus("Fahrzeuge");
+                            break;
+
+                            case 4: 
+                                labelEdit.setText("Dauer:  // nicht änderbar");
+                                txtEdit.setText(verm.getDuration()+ "");
+                                //txtEdit.setEditable(false);
+                            break;
+
+                            case 5: 
+                                labelEdit.setText("Kosten:  // nicht änderbar");
+                                txtEdit.setText(verm.getKosten() + "€");
+                                //txtEdit.setEditable(false);
+                            break;
+                        }
                     break;
-                    
-                    case 4: 
-                        labelEdit.setText("Dauer:  // nicht änderbar");
-                        txtEdit.setText(x.getDuration()+ "");
-                        //txtEdit.setEditable(false);
-                    break;
-                    
-                    case 5: 
-                        labelEdit.setText("Kosten:  // nicht änderbar");
-                        txtEdit.setText(x.getKosten() + "€");
-                        //txtEdit.setEditable(false);
-                    break;
-                }
+                } 
             break;
-        } 
+            
+            case "Kunden":
+                fillListView();
+            break;
+            
+            case "Fahrzeuge":
+                fillListView();
+            break;
+        }
     }
     
     private void showTextField(){
@@ -291,55 +357,49 @@ public class EditController implements Initializable {
         fillListView();
         switch(App.getOriginTyp()){
             case "Fahrzeug":
-                FahrzeugModel fm = App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex);
-                App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex);
-                switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
+                //indexInLs ist ein Index, welcher Zeigt worauf man als letztes in der ListView geklickt hat, ändert sich jedes mal
+                switch(indexInLs){
                     
                     case 0: 
-                        App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).setHersteller(txtEdit.getText());
-                        System.out.println(fm.getHersteller());
+                        fahrz.setHersteller(txtEdit.getText());
                         selectedIndex = 0;
                     break;
 
                     case 1: 
-                        System.out.println(fm.getModell());
-                        App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).setModell(txtEdit.getText());
+                        fahrz.setModell(txtEdit.getText());
                         selectedIndex = 1;
                     break;
 
                     case 2: 
-                        App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).setFarbe(txtEdit.getText());
-                        System.out.println(fm.getFarbe());
+                        fahrz.setFarbe(txtEdit.getText());
                         selectedIndex = 2;
                     break;
 
                     case 3: 
-                        App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).setKennzeichen(txtEdit.getText());
-                        System.out.println(fm.getKennzeichen());
+                        fahrz.setKennzeichen(txtEdit.getText());
                         selectedIndex = 3;
                     break;
 
                     case 4: 
-                        fm.setTyp(txtEdit.getText());
-                        System.out.println(fm.getTyp());
+                        fahrz.setTyp(txtEdit.getText());
                     break;
 
                     case 5: 
                         int temp1 = Integer.parseInt(txtEdit.getText());
-                        fm.setFahrzeugnummer(temp1);
+                        fahrz.setFahrzeugnummer(temp1);
                     break;
 
                     case 6: 
-                        fm.setInReparatur(checkBoxEdit.isSelected());
+                        fahrz.setInReparatur(checkBoxEdit.isSelected());
                     break;
 
                     case 7: 
-                        fm.setInBenutzung(checkBoxEdit.isSelected());
+                        fahrz.setInBenutzung(checkBoxEdit.isSelected());
                     break;
 
                     case 8: 
                         double temp2 = Double.parseDouble(txtEdit.getText());
-                        fm.setStundenkosten(temp2);
+                        fahrz.setStundenkosten(temp2);
                     break;
                 }
                
@@ -435,6 +495,7 @@ public class EditController implements Initializable {
         }
         System.out.println(selectedIndex);
         labelEdit.setText("");
+        System.out.println("fill list ben");
         fillListView();
         //txtEdit.clear();
         //showTextField();
@@ -444,39 +505,85 @@ public class EditController implements Initializable {
     @FXML
     private void btnHome(ActionEvent event) throws IOException {
         App.setRoot("mainView");
+        
+        //Replaced das alte mit dem neuen Objekt
+        if(fahrz != null){
+            App.fahrzeuge.remove(FahrzeugController.selFahrzeugIndex);
+            App.fahrzeuge.add(FahrzeugController.selFahrzeugIndex, fahrz);
+        }
+        if(gKunde != null){
+            App.kunden.remove(KundeController.selKundeIndex);
+            App.kunden.add(KundeController.selKundeIndex, gKunde);
+        }
+        if(pKunde != null){
+            App.kunden.remove(KundeController.selKundeIndex);
+            App.kunden.add(KundeController.selKundeIndex, pKunde);
+        }
+        if(verm != null){
+            App.vermietungen.remove(VermietungController.selVermietungIndex);
+            App.vermietungen.add(VermietungController.selVermietungIndex, verm);
+        }
+        
     }
     
     private void fillListView(){
         lvEditChoice.getItems().clear();
         switch (App.getOriginTyp()) {
             case "Vermietung":
-                VermietungModel vm = VermietungController.selectedVermietung;
-                DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-                String temp1 = vm.getStartDatum().format(format);
-                String temp2 = vm.getEndDatum().format(format);
-                lvEditChoice.getItems().add("Startdatum: " + temp1);
-                lvEditChoice.getItems().add("Enddatum : " + temp2);
-                if(VermietungController.selectedVermietung.getKunde().getKundenTyp().equals("Geschäftskunde")){
-                    GeschaeftsKundeModel g = (GeschaeftsKundeModel) VermietungController.getSelectedVermietung().getKunde();
-                    lvEditChoice.getItems().add(" // KUNDE // " + " Kundentyp: " + g.getKundenTyp() + " / Vorname: " + g.getVorname() + " / Nachname: " + g.getNachname() + " / Geburtsdatum: " + g.getGeburtsdatum());
+                switch(App.getListViewModus()){
+                    case "Vermietung":
+                        VermietungModel vm = VermietungController.selectedVermietung;
+                        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                        String temp1 = vm.getStartDatum().format(format);
+                        String temp2 = vm.getEndDatum().format(format);
+                        lvEditChoice.getItems().add("Startdatum: " + temp1);
+                        lvEditChoice.getItems().add("Enddatum : " + temp2);
+
+                        if(VermietungController.selectedVermietung.getKunde().getKundenTyp().equals("Geschäftskunde")){
+                            GeschaeftsKundeModel g = (GeschaeftsKundeModel) VermietungController.getSelectedVermietung().getKunde();
+                            lvEditChoice.getItems().add(" // KUNDE // " + " Kundentyp: " + g.getKundenTyp() + " / Vorname: " + g.getVorname() + " / Nachname: " + g.getNachname() + " / Geburtsdatum: " + g.getGeburtsdatum());
+                        }
+                        else  if(VermietungController.selectedVermietung.getKunde().getKundenTyp().equals("Privatkunde")){
+                            PrivatKundeModel p = (PrivatKundeModel) VermietungController.getSelectedVermietung().getKunde();
+                            lvEditChoice.getItems().add(" // KUNDE // " + " Kundentyp: " + p.getKundenTyp() + "/ Vorname: " + p.getVorname() + " / Nachname: " + p.getNachname() + " / Geburtsdatum: " + p.getGeburtsdatum());
+                        }   
+
+
+                        String temp3 = VermietungController.selectedVermietung.getFahrzeug().getFahrzeugnummer() + "";
+                        String temp4 = VermietungController.selectedVermietung.getFahrzeug().getInReparatur() + "";
+                        String temp5 = VermietungController.selectedVermietung.getFahrzeug().getInBenutzung() + "";
+                        String temp6 = VermietungController.selectedVermietung.getFahrzeug().getStundenkosten() + "€";
+                        FahrzeugModel Z = VermietungController.selectedVermietung.getFahrzeug();
+                        lvEditChoice.getItems().add(" // FAHRZEUG // " +  " Fahrzeugtyp: " + Z.getTyp() + " / Fahrzeug: " + Z.getHersteller() + " / Modell: " + Z.getModell() + " / Farbe: " + Z.getFarbe());
+
+                        lvEditChoice.getItems().add("Dauer: " + vm.getDuration() + "");
+                        lvEditChoice.getItems().add("Kosten: " + vm.getKosten() + "");
+                    break;
+                    
+                    case "Kunden":
+                        lvEditChoice.getItems().clear();
+                            for(KundeModel k : App.getKunden()){
+                             if(k.getKundenTyp().equals("Geschäftskunde")){
+
+                                GeschaeftsKundeModel g = (GeschaeftsKundeModel) k;
+                                lvEditChoice.getItems().add("Kundentyp: " + g.getKundenTyp() + " // Vorname: " + g.getVorname() + " // Nachname: " + g.getNachname() + " // Geburtsort: " + g.getGeburtsort() + " Geburtsdatum: " + g.getGeburtsdatum() + " // Arbeitsadresse: " + g.getArbeitsAdresse() + " // Arbeitstelefonnummer: " + g.getArbeitsTelefonnummer());
+                                 }
+                             else if(k.getKundenTyp().equals("Privatkunde")){
+
+                                     PrivatKundeModel p = (PrivatKundeModel) k;
+                                     lvEditChoice.getItems().add("Kundentyp: " + p.getKundenTyp() + " // Vorname: " + p.getVorname() + " // Nachname: " + p.getNachname() + " // Geburtsort: " + p.getGeburtsort() + " Geburtsdatum: " + p.getGeburtsdatum() + " // Sicherheitskontakt: " + p.getSicherheitsKontakt());
+                                 }
+                             }
+                            App.setListViewModus("Vermietung");
+                    break;
+                    
+                    case "Fahrzeuge":
+                            for(FahrzeugModel f : App.getFahrzeuge()){
+                                lvEditChoice.getItems().add("Fahrzeugtyp: " + f.getTyp() + " // Hersteller: " + f.getHersteller() + " // Modell: " + f.getModell() + " // Farbe: " + f.getFarbe() + " // Kennzeichen: " + f.getKennzeichen() + " // Stundenkosten: " + f.getStundenkosten() + " // Nummer: " + f.getFahrzeugnummer() + " // In Benutzung: " + f.getInBenutzung() + " // In Reparatur: " + f.getInReparatur());
+                           }
+                    break;
                 }
-                else  if(VermietungController.selectedVermietung.getKunde().getKundenTyp().equals("Privatkunde")){
-                    PrivatKundeModel p = (PrivatKundeModel) VermietungController.getSelectedVermietung().getKunde();
-                    lvEditChoice.getItems().add(" // KUNDE // " + " Kundentyp: " + p.getKundenTyp() + "/ Vorname: " + p.getVorname() + " / Nachname: " + p.getNachname() + " / Geburtsdatum: " + p.getGeburtsdatum());
-                }   
-                
-                
-                String temp3 = VermietungController.selectedVermietung.getFahrzeug().getFahrzeugnummer() + "";
-                String temp4 = VermietungController.selectedVermietung.getFahrzeug().getInReparatur() + "";
-                String temp5 = VermietungController.selectedVermietung.getFahrzeug().getInBenutzung() + "";
-                String temp6 = VermietungController.selectedVermietung.getFahrzeug().getStundenkosten() + "€";
-                FahrzeugModel Z = VermietungController.selectedVermietung.getFahrzeug();
-                lvEditChoice.getItems().add(" // FAHRZEUG // " +  " Fahrzeugtyp: " + Z.getTyp() + " / Fahrzeug: " + Z.getHersteller() + " / Modell: " + Z.getModell() + " / Farbe: " + Z.getFarbe());
-                
-                lvEditChoice.getItems().add("Dauer: " + vm.getDuration() + "");
-                lvEditChoice.getItems().add("Kosten: " + vm.getKosten() + "");
-            break;
-                
+                        
             case "GeschaeftsKunde":
                 GeschaeftsKundeModel g = (GeschaeftsKundeModel) KundeController.selectedKunde;
                 lvEditChoice.getItems().add(g.getVorname());
@@ -499,15 +606,15 @@ public class EditController implements Initializable {
             break;
             
             case "Fahrzeug":
-                String temp7 = App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).getFahrzeugnummer() + "";
-                String temp8 = App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).getInReparatur() + "";
-                String temp9 = App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).getInBenutzung() + "";
-                String temp10 = App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).getStundenkosten() + "€";
-                lvEditChoice.getItems().add("Hersteller: " + App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).getHersteller());
-                lvEditChoice.getItems().add("Modell: " + App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).getModell());
-                lvEditChoice.getItems().add("Farbe: " + App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).getFarbe());
-                lvEditChoice.getItems().add("Kennzeichen: " + App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).getKennzeichen());
-                lvEditChoice.getItems().add("Fahrzeugtyp: " + App.fahrzeuge.get(FahrzeugController.selFahrzeugIndex).getTyp());
+                String temp7 = fahrz.getFahrzeugnummer() + "";
+                String temp8 = fahrz.getInReparatur() + "";
+                String temp9 = fahrz.getInBenutzung() + "";
+                String temp10 = fahrz.getStundenkosten() + "€";
+                lvEditChoice.getItems().add("Hersteller: " + fahrz.getHersteller());
+                lvEditChoice.getItems().add("Modell: " + fahrz.getModell());
+                lvEditChoice.getItems().add("Farbe: " + fahrz.getFarbe());
+                lvEditChoice.getItems().add("Kennzeichen: " + fahrz.getKennzeichen());
+                lvEditChoice.getItems().add("Fahrzeugtyp: " + fahrz.getTyp());
                 lvEditChoice.getItems().add("Fahrzeugnummer: " + temp7);
                 lvEditChoice.getItems().add("In Reparatur: " + temp8);
                 lvEditChoice.getItems().add("In Benutzung: " + temp9);
@@ -517,7 +624,7 @@ public class EditController implements Initializable {
                 break;
         }
     }
-    
+        
     private void fillChoiceBox(){
         choiceTyp.getItems().add("Geschäftskunde");
         choiceTyp.getItems().add("Privatkunde");
@@ -693,4 +800,14 @@ public class EditController implements Initializable {
                 
         }
     }
+
+    public FahrzeugModel getFahrz() {
+        return fahrz;
+    }
+
+    public void setFahrz(FahrzeugModel fahrz) {
+        this.fahrz = fahrz;
+    }
+    
+    
 }

@@ -26,7 +26,7 @@ public class App extends Application {
     static ArrayList<VermietungModel> vermietungen;
     static String originTyp;
     static int Dauer;
-    static String ListView;
+    static String ListViewModus = "Vermietung";
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -89,13 +89,15 @@ public class App extends Application {
         App.originTyp = originTyp;
     }
 
-    public static String getListView() {
-        return ListView;
+    public static String getListViewModus() {
+        return ListViewModus;
     }
 
-    public static void setListView(String ListView) {
-        App.ListView = ListView;
+    public static void setListViewModus(String ListViewModus) {
+        App.ListViewModus = ListViewModus;
     }
+
+    
     
     
     
