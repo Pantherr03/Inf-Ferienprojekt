@@ -28,6 +28,7 @@ public class FahrzeugController implements Initializable {
     static FahrzeugModel selectedFahrzeug;
     @FXML
     private Button EditFahrzeug;
+    static int selFahrzeugIndex;
 
     /**
      * Initializes the controller class.
@@ -60,6 +61,7 @@ public class FahrzeugController implements Initializable {
     private void btnEditFahrzeug(ActionEvent event) throws IOException {
         int temp1 = lvFahrzeugDetail.getSelectionModel().getSelectedIndex();
         selectedFahrzeug = App.fahrzeuge.get(temp1);
+        selFahrzeugIndex = temp1;
         App.setOriginTyp("Fahrzeug");
         App.setRoot("editView");
     }

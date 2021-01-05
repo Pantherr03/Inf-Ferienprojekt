@@ -18,12 +18,18 @@ public class VermietungModel {
     
     private KundeModel kunde;
     private FahrzeugModel fahrzeug;
+    
+    private int duration;   
+    private double kosten;  
 
-    public VermietungModel(LocalDateTime startDatum, LocalDateTime endDatum, KundeModel kunde, FahrzeugModel fahrzeug) {
+
+    public VermietungModel(LocalDateTime startDatum, LocalDateTime endDatum, KundeModel kunde, FahrzeugModel fahrzeug, int duration, double kosten) {
         this.startDatum = startDatum;
         this.endDatum = endDatum;
         this.kunde = kunde;
         this.fahrzeug = fahrzeug;
+        this.duration = duration;
+        this.kosten = kosten;
     }
 
     public LocalDateTime getStartDatum() {
@@ -57,5 +63,23 @@ public class VermietungModel {
     public void setFahrzeug(FahrzeugModel fahrzeug) {
         this.fahrzeug = fahrzeug;
     }
+
+    public double getKosten() {
+        return kosten;
+    }
+
+    public void setKosten(double kosten) {
+        this.kosten = kosten;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    
     
 }

@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import javafx.util.converter.LocalDateTimeStringConverter;
+import java.time.Duration;
 /**
  * FXML Controller class
  *
@@ -71,8 +72,10 @@ public class AddVermietungController implements Initializable {
         choiceToDateEnde();
         LocalDateTime temp1 = LocalDateTime.of(dpStartDatum.getValue(), TS) ; 
         LocalDateTime temp2 = LocalDateTime.of(dpEndDatum.getValue(), TE);
-        App.vermietungen.add(new VermietungModel(temp1, temp2, selKunde, selFahrzeug));
-        System.out.println("Start: " + temp1 + " // Ende: " + temp2 + " // Kunde: " + selKunde.getVorname() + " " + selKunde.getNachname() + " // Typ: " + selFahrzeug.getTyp());
+        Duration duration = Duration.between(temp1, temp2);
+        int Dauer = (int) duration.toHours();
+        App.vermietungen.add(new VermietungModel(temp1, temp2, selKunde, selFahrzeug, Dauer, Dauer * selFahrzeug.getStundenkosten()));
+        System.out.println("Start: " + temp1 + " // Ende: " + temp2 + " // Kunde: " + selKunde.getVorname() + " " + selKunde.getNachname() + " // Typ: " + selFahrzeug.getTyp() + " // Dauer: " + Dauer + " // Kosten: " + selFahrzeug.getStundenkosten()*Dauer);
     }
     @FXML
     private void selFahrzeug(MouseEvent event) {
@@ -86,8 +89,6 @@ public class AddVermietungController implements Initializable {
         int temp4 = lvKundeAuswahl.getSelectionModel().getSelectedIndex();
         selKunde = App.kunden.get(temp4);
     }
-
-
 
 
     private void fillChoiceBox(){

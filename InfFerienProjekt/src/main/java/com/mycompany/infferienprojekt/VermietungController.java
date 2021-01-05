@@ -26,7 +26,6 @@ public class VermietungController implements Initializable {
     
     public static VermietungModel selectedVermietung;
     
-    String typ;
 
     /**
      * Initializes the controller class.
@@ -39,7 +38,7 @@ public class VermietungController implements Initializable {
                 String temp1 = v.getStartDatum().format(format);
                 String temp2 = v.getEndDatum().format(format);
                 
-                lvVermietungDetail.getItems().add("Startdatum: " + temp1 + " // Enddatum: " + temp2 + " // Fahrzeugtyp: " + v.getFahrzeug().getTyp() + " // Modell: " + v.getFahrzeug().getModell() + " // Farbe: " + v.getFahrzeug().getFarbe() + " // Kunde: " + v.getKunde().getVorname()+ " " + v.getKunde().getNachname() + " // Kundentyp: " + v.getKunde().getKundenTyp());
+                lvVermietungDetail.getItems().add("Startdatum: " + temp1 + " // Enddatum: " + temp2 + " // Fahrzeugtyp: " + v.getFahrzeug().getTyp() + " // Modell: " + v.getFahrzeug().getModell() + " // Farbe: " + v.getFahrzeug().getFarbe() + " // Kunde: " + v.getKunde().getVorname()+ " " + v.getKunde().getNachname() + " // Kundentyp: " + v.getKunde().getKundenTyp() + " // Dauer: " + v.getDuration() + " Stunden // Kosten: " + v.getDuration()*v.getFahrzeug().getStundenkosten() + "€");
             }
         }
         else{
@@ -75,12 +74,5 @@ public class VermietungController implements Initializable {
         this.selectedVermietung = selectedVermietung;
     }
 
-    public String getTyp() {
-        return typ;
-    }
-
-    public void setTyp(String typ) {
-        this.typ = typ;
-    }
     
 }
