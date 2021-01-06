@@ -21,11 +21,13 @@ import java.time.Duration;
 public class App extends Application {
 
     private static Scene scene;
+    //definiert die ArrayLists für Fahrzeuge, Kunden und Vermietungen
     static ArrayList<FahrzeugModel> fahrzeuge;
     static ArrayList<KundeModel> kunden;
     static ArrayList<VermietungModel> vermietungen;
+    //definiert den String originTyp, der in allen Controllern außer mainController genutzt wird
     static String originTyp;
-    static int Dauer;
+    //Definiert den ListViewModus für EditController wenn man von VermietungController kommt
     static String ListViewModus = "Vermietung";
 
     @Override
@@ -37,6 +39,7 @@ public class App extends Application {
         newArrayLists();
         startObjects();
     }
+    //initialisiert die drei ArrayLists
     private void newArrayLists(){
         fahrzeuge = new ArrayList<>();
         kunden = new ArrayList<>();
@@ -100,19 +103,16 @@ public class App extends Application {
     
     
     
-    
+    //setzt vier Objekte in die verschiedenen ArrayLists
     public static void startObjects(){
         LocalDateTime t1 = LocalDateTime.of(LocalDate.now(), LocalTime.now());
         LocalDateTime t2 = LocalDateTime.of(2021, Month.DECEMBER, 12, 14, 0);
         Duration duration = Duration.between(t1, t2);
-        Dauer = (int) duration.toHours();
+        int Dauer = (int) duration.toHours();
         fahrzeuge.add(new AutoModel("VW", "Golf", "rot", "HH TP 265", "Auto", false, false, 15.0, 23));
         kunden.add(new GeschaeftsKundeModel("Diekmoorweg 34", "0174 6253671", "20.07.2003", "Ben", "Bartel", "Hamburg", "Geschäftskunde"));
         kunden.add(new PrivatKundeModel("110", "08.09.2003" , "Paul", "Kern", "Hamburg", "Privatkunde"));
         vermietungen.add(new VermietungModel(t1, t2, kunden.get(0), fahrzeuge.get(0), Dauer, Dauer * fahrzeuge.get(0).getStundenkosten() ));
-    }
-    private static Period getPeriod(LocalDateTime t1, LocalDateTime t2) {
-        return Period.between(t1.toLocalDate(), t2.toLocalDate());
     }
     
 }

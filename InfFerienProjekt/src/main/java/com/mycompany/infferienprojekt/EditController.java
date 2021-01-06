@@ -7,6 +7,7 @@ package com.mycompany.infferienprojekt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -64,11 +65,11 @@ public class EditController implements Initializable {
         fahrz = FahrzeugController.selectedFahrzeug;
         if(KundeController.selectedKunde != null)
             switch(KundeController.selectedKunde.getKundenTyp()){
-                case "GeschaeftsKunde":
+                case "Geschäftskunde":
                     gKunde = (GeschaeftsKundeModel) KundeController.selectedKunde;
                 break;
 
-                case "PrivatKunde":
+                case "Privatkunde":
                     pKunde = (PrivatKundeModel) KundeController.selectedKunde;
                 break;
             }
@@ -82,6 +83,7 @@ public class EditController implements Initializable {
 
     @FXML
     private void selDone(MouseEvent event) {
+        txtEdit.setEditable(true);
         indexInLs = lvEditChoice.getSelectionModel().getSelectedIndex();
         showTextField();
         switch(App.getListViewModus()){
@@ -168,8 +170,7 @@ public class EditController implements Initializable {
                             break;
 
                             case 4: 
-                                showChoiceBox();
-                                labelEdit.setText("Kundentyp:");
+                                txtEdit.setText(gKunde.getKundenTyp());
                             break;
 
                             case 5: 
@@ -207,8 +208,7 @@ public class EditController implements Initializable {
                             break;
 
                             case 4: 
-                                showChoiceBox();
-                                labelEdit.setText("Kundentyp:");
+                                labelEdit.setText(pKunde.getKundenTyp());
                             break;
 
                             case 5: 
@@ -220,13 +220,13 @@ public class EditController implements Initializable {
 
 
                     case "Vermietung":
-                        int e = lvEditChoice.getSelectionModel().getSelectedIndex();
                         switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
                             case 0: 
                                 dpEdit.setValue(null);
                                 showDatePicker();
                                 labelEdit.setText("Startdatum:");
                                 dpEdit.setValue(verm.getStartDatum().toLocalDate());
+                                
                             break;
 
                             case 1: 
@@ -237,28 +237,27 @@ public class EditController implements Initializable {
                             break;
 
                             case 2: 
-                                labelEdit.setText("Kunde:");
+                                labelEdit.setText("wählen sie einen anderen Kunden aus");
+                                showKundenInView();
                                 txtEdit.setText(verm.getKunde().getVorname() + " " + verm.getKunde().getNachname());
-                                App.setListViewModus("Kunden");
                             break;
 
                             case 3: 
-                                labelEdit.setText("Fahrzeug:");
+                                labelEdit.setText("wählen sie ein anderes Fahrzeug aus");
                                 showFahrzeugeInView();
                                 txtEdit.setText(verm.getFahrzeug().getHersteller() + " " + verm.getFahrzeug().getModell());
-                                App.setListViewModus("Fahrzeuge");
                             break;
 
                             case 4: 
                                 labelEdit.setText("Dauer:  // nicht änderbar");
                                 txtEdit.setText(verm.getDuration()+ "");
-                                //txtEdit.setEditable(false);
+                                txtEdit.setEditable(false);
                             break;
 
                             case 5: 
                                 labelEdit.setText("Kosten:  // nicht änderbar");
                                 txtEdit.setText(verm.getKosten() + "€");
-                                //txtEdit.setEditable(false);
+                                txtEdit.setEditable(false);
                             break;
                         }
                     break;
@@ -266,10 +265,20 @@ public class EditController implements Initializable {
             break;
             
             case "Kunden":
+                txtEdit.clear();
+                labelEdit.setText("");
+                fillListView();
+                verm.setKunde(App.getKunden().get(indexInLs));
+                App.setListViewModus("Vermietung");
                 fillListView();
             break;
             
             case "Fahrzeuge":
+                txtEdit.clear();
+                labelEdit.setText("");
+                fillListView();
+                verm.setFahrzeug(App.getFahrzeuge().get(indexInLs));
+                App.setListViewModus("Vermietung");
                 fillListView();
             break;
         }
@@ -354,7 +363,6 @@ public class EditController implements Initializable {
     @FXML
     private void btnEditDone(ActionEvent event) {
         //txtEdit.setEditable(true);
-        fillListView();
         switch(App.getOriginTyp()){
             case "Fahrzeug":
                 //indexInLs ist ein Index, welcher Zeigt worauf man als letztes in der ListView geklickt hat, ändert sich jedes mal
@@ -406,34 +414,34 @@ public class EditController implements Initializable {
             break;
             
             case "GeschaeftsKunde":
-                GeschaeftsKundeModel g = (GeschaeftsKundeModel) KundeController.selectedKunde;
+                //GeschaeftsKundeModel g = (GeschaeftsKundeModel) KundeController.selectedKunde;
                 switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
                     case 0:
-                        g.setVorname(txtEdit.getText());
+                        gKunde.setVorname(txtEdit.getText());
                     break;
                     
                     case 1:
-                        g.setNachname(txtEdit.getText());
+                        gKunde.setNachname(txtEdit.getText());
                     break;
                     
                     case 2:
-                        g.setGeburtsort(txtEdit.getText());
+                        gKunde.setGeburtsort(txtEdit.getText());
                     break;
                     
                     case 3:
-                        g.setGeburtsdatum(txtEdit.getText());
+                        gKunde.setGeburtsdatum(txtEdit.getText());
                     break;
                     
                     case 4: 
-                        g.setKundenTyp(choiceTyp.getValue());
+                        
                     break;
                     
                     case 5:
-                        g.setArbeitsAdresse(txtEdit.getText());
+                        gKunde.setArbeitsAdresse(txtEdit.getText());
                     break;
                     
                     case 6:
-                        g.setArbeitsTelefonnummer(txtEdit.getText());
+                        gKunde.setArbeitsTelefonnummer(txtEdit.getText());
                     break;
                 }
             break; 
@@ -458,7 +466,7 @@ public class EditController implements Initializable {
                     break;
                     
                     case 4:
-                       p.setKundenTyp(choiceTyp.getValue());
+                       
                     break;
                     
                     case 5:
@@ -468,36 +476,62 @@ public class EditController implements Initializable {
             break; 
             
             case "Vermietung":
-                choiceDateEdit();
-                LocalDateTime temp1 = LocalDateTime.of(dpEdit.getValue(), T) ; 
-                VermietungModel y = VermietungController.selectedVermietung;
-                switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
-                    case 0:
-                        showDatePicker();
-                        y.setStartDatum(temp1);
-                    break;
-                    
-                    case 1:
-                        showDatePicker();
-                        y.setEndDatum(temp1);
-                    break;
-                    
-                    case 2:
-                        showFahrzeugeInView();
-                    break;
-                    
-                    case 3:
+                switch(App.getListViewModus()){
+                    case "Vermietung":
+                        choiceDateEdit();
+                        LocalDateTime temp1 = LocalDateTime.of(dpEdit.getValue(), T) ; 
+                        VermietungModel y = VermietungController.selectedVermietung;
                         
-                    break;   
-                }
-            break;
+                        switch(lvEditChoice.getSelectionModel().getSelectedIndex()){
+                            case 0:
+                                showDatePicker();
+                                y.setStartDatum(temp1);
+                                Duration duration1 = Duration.between(verm.getStartDatum(), verm.getEndDatum());
+                                int Dauer1 = (int) duration1.toHours();
+                                verm.setDuration(Dauer1);
+                                verm.setKosten(verm.getDuration()*verm.getFahrzeug().getStundenkosten());
+                            break;
 
+                            case 1:
+                                showDatePicker();
+                                y.setEndDatum(temp1);
+                                Duration duration2 = Duration.between(verm.getStartDatum(), verm.getEndDatum());
+                                int Dauer2 = (int) duration2.toHours();
+                                verm.setDuration(Dauer2);
+                                verm.setKosten(verm.getDuration()*verm.getFahrzeug().getStundenkosten());
+                            break;
+
+                            case 2:
+                                App.setListViewModus("Kunden");
+                            break;
+
+                            case 3:
+                                App.setListViewModus("Fahrzeuge");
+                            break;   
+                        }
+                    break;
+                    
+                    case "Kunden":
+                        for(KundeModel k : App.getKunden()){
+                            lvEditChoice.getItems().add("Kundentyp: " + k.getKundenTyp() + " // Vorname: " + k.getVorname() + " // Nachname: " + k.getNachname() + " // Geburtsort: " + k.getGeburtsort() + " Geburtsdatum: " + k.getGeburtsdatum());   
+                 }
+                    break;
+                    
+                    case "Fahrzeuge":
+                        lvEditChoice.getItems().clear();
+                        for(FahrzeugModel f : App.getFahrzeuge()){
+                        lvEditChoice.getItems().add("Fahrzeugtyp: " + f.getTyp() + " // Hersteller: " + f.getHersteller() + " // Modell: " + f.getModell() + " // Farbe: " + f.getFarbe() + " // Kennzeichen: " + f.getKennzeichen() + " // Stundenkosten: " + f.getStundenkosten() + " // Nummer: " + f.getFahrzeugnummer() + " // In Benutzung: " + f.getInBenutzung() + " // In Reparatur: " + f.getInReparatur());
+                        }
+                    break;
+            
+                    
+                }
         }
         System.out.println(selectedIndex);
         labelEdit.setText("");
-        System.out.println("fill list ben");
+        System.out.println("Button gedrückt");
         fillListView();
-        //txtEdit.clear();
+        txtEdit.clear();
         //showTextField();
         //App.setListView("Vermietung");
     }
@@ -523,7 +557,7 @@ public class EditController implements Initializable {
             App.vermietungen.remove(VermietungController.selVermietungIndex);
             App.vermietungen.add(VermietungController.selVermietungIndex, verm);
         }
-        
+        App.setListViewModus("Vermietung");
     }
     
     private void fillListView(){
@@ -547,17 +581,11 @@ public class EditController implements Initializable {
                             PrivatKundeModel p = (PrivatKundeModel) VermietungController.getSelectedVermietung().getKunde();
                             lvEditChoice.getItems().add(" // KUNDE // " + " Kundentyp: " + p.getKundenTyp() + "/ Vorname: " + p.getVorname() + " / Nachname: " + p.getNachname() + " / Geburtsdatum: " + p.getGeburtsdatum());
                         }   
-
-
-                        String temp3 = VermietungController.selectedVermietung.getFahrzeug().getFahrzeugnummer() + "";
-                        String temp4 = VermietungController.selectedVermietung.getFahrzeug().getInReparatur() + "";
-                        String temp5 = VermietungController.selectedVermietung.getFahrzeug().getInBenutzung() + "";
-                        String temp6 = VermietungController.selectedVermietung.getFahrzeug().getStundenkosten() + "€";
                         FahrzeugModel Z = VermietungController.selectedVermietung.getFahrzeug();
                         lvEditChoice.getItems().add(" // FAHRZEUG // " +  " Fahrzeugtyp: " + Z.getTyp() + " / Fahrzeug: " + Z.getHersteller() + " / Modell: " + Z.getModell() + " / Farbe: " + Z.getFarbe());
 
-                        lvEditChoice.getItems().add("Dauer: " + vm.getDuration() + "");
-                        lvEditChoice.getItems().add("Kosten: " + vm.getKosten() + "");
+                        lvEditChoice.getItems().add("Dauer: " + vm.getDuration() + " Stunden");
+                        lvEditChoice.getItems().add("Kosten: " + vm.getKosten() + "€");
                     break;
                     
                     case "Kunden":
@@ -574,16 +602,16 @@ public class EditController implements Initializable {
                                      lvEditChoice.getItems().add("Kundentyp: " + p.getKundenTyp() + " // Vorname: " + p.getVorname() + " // Nachname: " + p.getNachname() + " // Geburtsort: " + p.getGeburtsort() + " Geburtsdatum: " + p.getGeburtsdatum() + " // Sicherheitskontakt: " + p.getSicherheitsKontakt());
                                  }
                              }
-                            App.setListViewModus("Vermietung");
+
                     break;
                     
                     case "Fahrzeuge":
                             for(FahrzeugModel f : App.getFahrzeuge()){
-                                lvEditChoice.getItems().add("Fahrzeugtyp: " + f.getTyp() + " // Hersteller: " + f.getHersteller() + " // Modell: " + f.getModell() + " // Farbe: " + f.getFarbe() + " // Kennzeichen: " + f.getKennzeichen() + " // Stundenkosten: " + f.getStundenkosten() + " // Nummer: " + f.getFahrzeugnummer() + " // In Benutzung: " + f.getInBenutzung() + " // In Reparatur: " + f.getInReparatur());
+                                lvEditChoice.getItems().add("Fahrzeugtyp: " + f.getTyp() + " // Hersteller: " + f.getHersteller() + " // Modell: " + f.getModell() + " // Farbe: " + f.getFarbe() + " // Kennzeichen: " + f.getKennzeichen() + " // Stundenkosten: " + f.getStundenkosten() + "€ // Nummer: " + f.getFahrzeugnummer() + " // In Benutzung: " + f.getInBenutzung() + " // In Reparatur: " + f.getInReparatur());
                            }
                     break;
                 }
-                        
+                    break;
             case "GeschaeftsKunde":
                 GeschaeftsKundeModel g = (GeschaeftsKundeModel) KundeController.selectedKunde;
                 lvEditChoice.getItems().add(g.getVorname());
@@ -623,6 +651,7 @@ public class EditController implements Initializable {
             default:
                 break;
         }
+        System.out.println("ListView gefüllt");
     }
         
     private void fillChoiceBox(){
@@ -777,29 +806,28 @@ public class EditController implements Initializable {
         for(FahrzeugModel f : App.getFahrzeuge()){
             lvEditChoice.getItems().add("Fahrzeugtyp: " + f.getTyp() + " // Hersteller: " + f.getHersteller() + " // Modell: " + f.getModell() + " // Farbe: " + f.getFarbe() + " // Kennzeichen: " + f.getKennzeichen() + " // Stundenkosten: " + f.getStundenkosten() + " // Nummer: " + f.getFahrzeugnummer() + " // In Benutzung: " + f.getInBenutzung() + " // In Reparatur: " + f.getInReparatur());
         }
+        App.setListViewModus("Fahrzeuge");
     }
     
     private void showKundenInView(){
-        switch (VermietungController.selectedVermietung.getKunde().getKundenTyp()){
-                case "Geschäftskunde":
                  lvEditChoice.getItems().clear();
                  for(KundeModel k : App.getKunden()){
+                     switch(k.getKundenTyp()){
+                         case "Geschäftskunde":
+                            GeschaeftsKundeModel g = (GeschaeftsKundeModel) k;
+                            lvEditChoice.getItems().add("Kundentyp: " + g.getKundenTyp() + " // Vorname: " + g.getVorname() + " // Nachname: " + g.getNachname() + " // Geburtsort: " + g.getGeburtsort() + " Geburtsdatum: " + g.getGeburtsdatum() + " // Arbeitsadresse: " + g.getArbeitsAdresse() + " // Arbeitstelefonnummer: " + g.getArbeitsTelefonnummer());   
+                        break;
+                            
+                        case "Privatkunde":               
+                            PrivatKundeModel p = (PrivatKundeModel) k;
+                            lvEditChoice.getItems().add("Kundentyp: " + p.getKundenTyp() + " // Vorname: " + p.getVorname() + " // Nachname: " + p.getNachname() + " // Geburtsort: " + p.getGeburtsort() + " Geburtsdatum: " + p.getGeburtsdatum() + " // Sicherheitskontakt: " + p.getSicherheitsKontakt());
+                        break;
+                     }
                      
-                    GeschaeftsKundeModel g = (GeschaeftsKundeModel) k;
-                    lvEditChoice.getItems().add("Kundentyp: " + g.getKundenTyp() + " // Vorname: " + g.getVorname() + " // Nachname: " + g.getNachname() + " // Geburtsort: " + g.getGeburtsort() + " Geburtsdatum: " + g.getGeburtsdatum() + " // Arbeitsadresse: " + g.getArbeitsAdresse() + " // Arbeitstelefonnummer: " + g.getArbeitsTelefonnummer());   
-                 }
-            break;
-           
-            case "PrivatKunde":
-                lvEditChoice.getItems().clear();
-                for(KundeModel k : App.getKunden()){
-                        PrivatKundeModel p = (PrivatKundeModel) k;
-                        lvEditChoice.getItems().add("Kundentyp: " + p.getKundenTyp() + " // Vorname: " + p.getVorname() + " // Nachname: " + p.getNachname() + " // Geburtsort: " + p.getGeburtsort() + " Geburtsdatum: " + p.getGeburtsdatum() + " // Sicherheitskontakt: " + p.getSicherheitsKontakt());
                 }
-            break;
-                
+                 App.setListViewModus("Kunden");
         }
-    }
+    
 
     public FahrzeugModel getFahrz() {
         return fahrz;

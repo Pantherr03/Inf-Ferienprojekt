@@ -20,7 +20,7 @@ import javafx.scene.control.ListView;
  */
 public class MainController implements Initializable {
 
-
+    //definiert die drei ListViews und dass sie Strings enthalten
     @FXML
     private ListView<String> lvFahrzeuge;
     @FXML
@@ -33,32 +33,26 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         if(App.getFahrzeuge() != null){
+            //füllt die ListVIew lvFahrzeuge mit den Variablen der verschiedenen Objekte in der ArrayList fahrzeuge
             for(FahrzeugModel f : App.getFahrzeuge()){
                  lvFahrzeuge.getItems().add(f.getTyp() + " " + f.getHersteller() + " " + f.getModell() + " " + f.getFarbe() + " " + f.getKennzeichen() + " " + f.getStundenkosten() + " " + f.getFahrzeugnummer() + " " + f.getInBenutzung() + " " + f.getInReparatur());
             }
-        }
-        else{
-            System.out.println("es können noch keine Fahrzeuge abgebildet werden");
-        }
-        if(App.getKunden() != null){
+            //füllt die ListVIew lvKunden mit den Variablen der verschiedenen Objekte in der ArrayList kunden
             for(KundeModel k : App.getKunden()){
                 lvKunden.getItems().add(k.getKundenTyp() + " " + k.getVorname() + " " + k.getNachname() + " " + k.getGeburtsdatum() + " " + k.getGeburtsort());
             }
-        }
-        else{
-                System.out.println("es sind noch keine Kunden vorhanden");
-        }
-        if(App.getVermietungen() != null){
+            //füllt die ListVIew lvVermietungen mit den Variablen der verschiedenen Objekte in der ArrayList vermietungen
             for(VermietungModel v : App.getVermietungen()){
                 String temp1 = v.getStartDatum().toString();
                 String temp2 = v.getEndDatum().toString();
                 lvVermietungen.getItems().add("Startdatum: " + temp1 + " // Enddatum: " + temp2 + " // Fahrzeugtyp: " + v.getFahrzeug().getTyp() + " // Modell: " + v.getFahrzeug().getModell() + " // Kunde: " + v.getKunde().getVorname()+ " " + v.getKunde().getNachname());
             }
         }
+    } 
     
-    }    
+      
         
-    
+    //definiert die Buttons um in die verschiedenen Views zu gelangen
     @FXML
     private void btnToKundenDetail(ActionEvent event) throws IOException {
         App.setRoot("kundeView");

@@ -20,17 +20,19 @@ import javafx.scene.control.ListView;
  */
 public class KundeController implements Initializable {
 
+    //definiert die ListView lvKundeDetail
     @FXML
     private ListView<String> lvKundeDetail;
+    //definiert die Variable selectedKunde, die in btnEditKunde genutzt wird und in EditController aufgerufen wird
     static KundeModel selectedKunde;
-    
+    //definiert den int selKundeIndex, um leichter aus anderen Klassen auf den Index des "selectedKunde" zugreifen zu können
     static  int selKundeIndex;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         if(!(App.getKunden().isEmpty())){
+            //füllt die ListView lvKundeDetail mit allen Objekten aus der ArrayList kunden
              for(KundeModel k : App.getKunden()){
                  if(k.getKundenTyp().equals("Geschäftskunde")){
                      
@@ -44,7 +46,7 @@ public class KundeController implements Initializable {
                      }
                  }
              
-         }
+         
         
     }    
     
