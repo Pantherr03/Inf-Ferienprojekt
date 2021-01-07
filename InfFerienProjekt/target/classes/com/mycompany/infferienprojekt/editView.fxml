@@ -14,7 +14,7 @@
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.infferienprojekt.EditController">
    <children>
       <ListView fx:id="lvEditChoice" layoutX="526.0" layoutY="14.0" onMouseClicked="#selDone" prefHeight="575.0" prefWidth="260.0" />
-      <TextField fx:id="txtEdit" layoutX="204.0" layoutY="289.0" onAction="#btnEditField" />
+      <TextField fx:id="txtEdit" layoutX="204.0" layoutY="289.0" />
       <Label layoutX="95.0" layoutY="215.0" text="Wählen sie aus, was sie ändern wollen">
          <font>
             <Font size="22.0" />

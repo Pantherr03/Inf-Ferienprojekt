@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.infferienprojekt;
 
 import java.io.IOException;
@@ -11,20 +6,14 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import javafx.util.converter.LocalDateTimeStringConverter;
 import java.time.Duration;
-/**
- * FXML Controller class
- *
- * @author Paul
- */
+
 public class AddVermietungController implements Initializable {
 
 
@@ -49,15 +38,11 @@ public class AddVermietungController implements Initializable {
     
     @FXML
     private DatePicker dpEnddatum;
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fillChoiceBox();
         fillListView();
-        
-        // TODO
     }    
     
     @FXML

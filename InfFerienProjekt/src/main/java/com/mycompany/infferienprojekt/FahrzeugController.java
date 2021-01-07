@@ -1,11 +1,5 @@
 package com.mycompany.infferienprojekt;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,14 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
-/**
- * FXML Controller class
- *
- * @author Paul
- */
 public class FahrzeugController implements Initializable {
 
-    //definiert die ListVIew lvFahrzeugdetail
+    //definiert die ListVIew lvFahrzeugDetail
+    //in der lvFahrzeuge werden die Variablen der Objekte der ArrayList fahrzeuge abgebildet
     @FXML
     private ListView<String> lvFahrzeugDetail;
     //definiert die Variable selectedFahrzeug, die in btnEditFahrzeug genutzt wird und in EditController aufgerufen wird
@@ -34,9 +24,6 @@ public class FahrzeugController implements Initializable {
     //definiert den int selFahrzeugIndex, um leichter aus anderen Klassen auf den Index des "selectedFahrzeug" zugreifen zu können
     static int selFahrzeugIndex;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //setzt den EditFahrzeug button auf nicht nutzbar, da kein Objekt ausgewählt ist
@@ -62,7 +49,7 @@ public class FahrzeugController implements Initializable {
 
     @FXML
     private void btnEditFahrzeug(ActionEvent event) throws IOException {
-        //setzt selFahrzeugIndex auf den Index des in der ListVIew ausgewählten Objektes
+        //setzt selFahrzeugIndex auf den Index des in der ListView ausgewählten Objektes
         selFahrzeugIndex = lvFahrzeugDetail.getSelectionModel().getSelectedIndex();
         //holt sich das "selectedFahrzeug" aus der ArrayList fahrzeuge
         selectedFahrzeug = App.fahrzeuge.get(selFahrzeugIndex);

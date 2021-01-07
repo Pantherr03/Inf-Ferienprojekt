@@ -15,9 +15,6 @@ import java.time.Month;
 import java.time.Period;
 import java.time.Duration;
 
-/**
- * JavaFX App
- */
 public class App extends Application {
 
     private static Scene scene;
@@ -109,7 +106,7 @@ public class App extends Application {
         LocalDateTime t2 = LocalDateTime.of(2021, Month.DECEMBER, 12, 14, 0);
         Duration duration = Duration.between(t1, t2);
         int Dauer = (int) duration.toHours();
-        fahrzeuge.add(new AutoModel("VW", "Golf", "rot", "HH TP 265", "Auto", false, false, 15.0, 23));
+        fahrzeuge.add(new PkwModel("VW", "Golf", "rot", "HH TP 265", "Auto", false, false, 15.0, 23));
         kunden.add(new GeschaeftsKundeModel("Diekmoorweg 34", "0174 6253671", "20.07.2003", "Ben", "Bartel", "Hamburg", "Geschäftskunde"));
         kunden.add(new PrivatKundeModel("110", "08.09.2003" , "Paul", "Kern", "Hamburg", "Privatkunde"));
         vermietungen.add(new VermietungModel(t1, t2, kunden.get(0), fahrzeuge.get(0), Dauer, Dauer * fahrzeuge.get(0).getStundenkosten() ));

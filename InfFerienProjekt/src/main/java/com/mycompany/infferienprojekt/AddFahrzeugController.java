@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.infferienprojekt;
 
 import java.io.IOException;
@@ -15,11 +10,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
-/**
- * FXML Controller class
- *
- * @author Paul
- */
 public class AddFahrzeugController implements Initializable {
 
     @FXML
@@ -41,16 +31,12 @@ public class AddFahrzeugController implements Initializable {
     @FXML
     private CheckBox checkReparatur;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         choiceTyp.getItems().add("PKW");
         choiceTyp.getItems().add("LKW");
         choiceTyp.getItems().add("Anhänger");
         choiceTyp.getItems().add("Van");
-        // TODO
     }    
 
     @FXML
@@ -60,7 +46,7 @@ public class AddFahrzeugController implements Initializable {
                 {
                     double temp3 = Double.parseDouble(txtStundenkosten.getText());
                     int temp4 = Integer.parseInt(txtFahrzeugnummer.getText());
-                    App.fahrzeuge.add(new AutoModel(txtHersteller.getText(), txtModell.getText(), txtFarbe.getText(), txtKennzeichen.getText(), "PKW", checkReparatur.isSelected(), checkBenutzung.isSelected(), temp3, temp4));
+                    App.fahrzeuge.add(new PkwModel(txtHersteller.getText(), txtModell.getText(), txtFarbe.getText(), txtKennzeichen.getText(), "PKW", checkReparatur.isSelected(), checkBenutzung.isSelected(), temp3, temp4));
                     break;
                 }
             case "LKW":
