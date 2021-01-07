@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 
 public class AddKundeController implements Initializable {
 
+    //definiert die verschiedenen Textfelder zum festlegen der Werte des neuen Kunden
     @FXML
     private TextField txtVorname;
     @FXML
@@ -19,8 +20,12 @@ public class AddKundeController implements Initializable {
     private TextField txtGeburtsort;
     @FXML
     private TextField txtGeburtsdatum;
+    
+    //definiert die ChoiceBox zum festlegen des Kundentyps
     @FXML
     private ChoiceBox<String> choiceTyp;
+    
+    //definiert die KundenTyp-spezifischen Textfelder
     @FXML
     private TextField txtArbeitsAdresse;
     @FXML
@@ -30,35 +35,46 @@ public class AddKundeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        //macht die choiceBox nutzbar
         choiceTyp.setDisable(false);
+        
+        //fügt die Kundentypen zur ChoiceBox choiceTyp an
         choiceTyp.getItems().add("Geschäftskunde");
         choiceTyp.getItems().add("Privatkunde");
     }    
 
     @FXML
     private void btnAddKunde(ActionEvent event) {
+        
+        //ruft choiceTyp.getValue auf, um den Kundentypen des neuen Kunden zu erhalten
         switch(choiceTyp.getValue()){
+            
+            //überprüft, ob der Kundentyp "Geschäftskunde" ist
             case "Geschäftskunde":
             {
-                
+                //fügt der ArrayList kunden einen neuen Geschäftskunden hinzu
                 App.kunden.add(new GeschaeftsKundeModel(txtArbeitsAdresse.getText(), txtArbeitsNummer.getText(),  txtGeburtsdatum.getText(),txtVorname.getText(),  txtNachname.getText(), txtGeburtsort.getText(), "Geschäftskunde"));
                 break;
             }
+            //überprüft, ob der Kundentyp "Geschäftskunde" ist
             case "Privatkunde":
             {
+                //fügt der ArrayList kunden einen neuen Privatkunden hinzu
                 App.kunden.add(new PrivatKundeModel(txtSicherheitsKontakt.getText(), txtGeburtsdatum.getText(), txtVorname.getText(), txtNachname.getText(), txtGeburtsort.getText(), "Privatkunde"));
                 break;
             }
         }
-        Integer i = App.kunden.size() - 1;
-        System.out.println("Vorname: " + App.kunden.get(i).getVorname() + " // Nachname: " + App.kunden.get(i).getNachname() + " // Kundentyp: " + App.kunden.get(i).getKundenTyp() + " // Geburtsdatum: " + App.kunden.get(i).getGeburtsdatum() + " // Geburtsort: " + App.kunden.get(i).getGeburtsort());
+        System.out.println("neuer Kunde erstellt");
     }
 
+    //definiert den button, um in die mainView zu gelangen
     @FXML
     private void btnHome(ActionEvent event) throws IOException {
         App.setRoot("mainView");
     }
     
+    //definiert den button zum bestätigen der Auswahl in der choiceBox um sie zu verstecken und die spezifischen Textfelder zu zeigen
     @FXML
     private void btnRefresh(ActionEvent event) {
             if(choiceTyp.getValue().equals("Geschäftskunde")){

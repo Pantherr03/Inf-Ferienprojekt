@@ -23,7 +23,6 @@ public class MainController implements Initializable {
     @FXML
     private ListView<String> lvVermietungen;
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //überprüft, ob bereits Objekte in der ArrayList fahrzeuge sind
@@ -48,8 +47,6 @@ public class MainController implements Initializable {
         }
     } 
     
-      
-        
     //definiert die Buttons um in die verschiedenen Views zu gelangen
     @FXML
     private void btnToKundenDetail(ActionEvent event) throws IOException {

@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -23,38 +24,49 @@ public class EditController implements Initializable {
     //definiert die ListView lvEditChoice, in der alle Daten jedes Objektes, was man ändern möchte angezeigt werden können
     @FXML
     private ListView<String> lvEditChoice;
+    
     //definiert das Textfeld txtEdit, in der der Großteil der änderungen vorgenommen werden
     @FXML
     private TextField txtEdit;
+    
     //definiert die CheckBox checkBoxEdit, in der alle Variablen verändert werden, die einen boolean benötigen
     @FXML
     private CheckBox checkBoxEdit;
+    
     //definiert das Label, in der der Text über dem TextField steht
     @FXML
     private Label labelEdit;
+    
     //definiert den DatePicker dpEdit für änderungen am Start- oder Enddatum einer Miete
     @FXML
     private DatePicker dpEdit;
+    
     //definiert die ChoiceBox choiceTime, in der man beim bearbeiten der Miete die Zeit auswählen muss
     @FXML
     private ChoiceBox<String> choiceTime;
+    
+    //definiert den button, sodass er disabled werden kann
+    @FXML
+    private Button confirmEdit;
+    
     //definiert die LocalTime T, die in choiceDateEdit genutzt wird, um die in choiceTime ausgewählte Zeit als echte Zeit zu speichern
     LocalTime T;
+    
     //definiert den int indexInLv um den zuletzt ausgewählten Index zu speichern
     int indexInLv;
     
-    
-    //Das gewählte Objekt wird hier gespeichert und wenn man die View verlässt wird das entsprechende Objekt in der App.fahrzeuge mit dem 
-    //hierigen ersetzt. 
     //erstellt fahz, gKunde, pKunde und verm, in ihnen wird das Objekt, was man verändert und die Änderungen daran gespeichert. In btnHome wird das entspechende Objekt aus der ArrayList entfernt und stattdessen wird das veränderte hinzugefügt
     FahrzeugModel fahrz;
     GeschaeftsKundeModel gKunde;
     PrivatKundeModel pKunde;
     VermietungModel verm;
     
+    
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         //initialisiert fahrz, gKunde, pKunde und verm 
         fahrz = FahrzeugController.selectedFahrzeug;
         if(KundeController.selectedKunde != null)
@@ -78,22 +90,34 @@ public class EditController implements Initializable {
     //definiert, was passiert, wenn man die ListView anclickt
     @FXML
     private void selDone(MouseEvent event) {
+        
+        //setzt den button auf nutzbar
+        confirmEdit.setDisable(false);
+        
         //setzt das TextField auf bearbeitbar
         txtEdit.setEditable(true);
+        
         //initalisiert indexInLv, welcher den Index des zuletzt ausgewählten Objektes speichert
         indexInLv = lvEditChoice.getSelectionModel().getSelectedIndex();
+        
         //ruft showTextField auf
         showTextField();
+        
         //ruft den Wert der Variable ListViewModus auf
         switch(App.getListViewModus()){
+            
             //überprüft, ob sich die ListView im Modus "Vermietung" befindet
             case "Vermietung":
+                
                 //ruft den Wert der Variable OriginTyp auf
                 switch(App.getOriginTyp()){
+                    
                     //überprüft, ob der OriginTyp "Fahrzeug" ist
                     case "Fahrzeug": 
+                        
                         //überprüft, welcher Index als letztes angeclickt wurde
                         switch(indexInLv){
+                            
                             //setzt den Text im Textfeld/in der CheckBox und im Label entsprechend dem Inhalt des jeweiligen Indexes
                             case 0: 
                                 labelEdit.setText("Hersteller:");
@@ -116,8 +140,10 @@ public class EditController implements Initializable {
                             break;
 
                             case 4: 
-                                labelEdit.setText("Fahrzeugtyp:");
+                                labelEdit.setText("Fahrzeugtyp, nicht änderbar!");
                                 txtEdit.setText(fahrz.getTyp());
+                                txtEdit.setEditable(false);
+                                confirmEdit.setDisable(true);
                             break;
 
                             case 5: 
@@ -148,10 +174,13 @@ public class EditController implements Initializable {
                             break;
                         }    
                     break;
+                    
                     //überprüft, ob der OriginTyp "GeschaeftsKunde" ist
                     case "GeschaeftsKunde": 
+                        
                         //überprüft, welcher Index als letztes angeclickt wurde
                         switch(indexInLv){
+                            
                             //setzt den Text im Textfeld und im Label entsprechend dem Inhalt des jeweiligen Indexes
                             case 0: 
                                 labelEdit.setText("Vorname:");
@@ -174,7 +203,10 @@ public class EditController implements Initializable {
                             break;
 
                             case 4: 
+                                labelEdit.setText("Kundentyp, nicht änderbar!");
                                 txtEdit.setText(gKunde.getKundenTyp());
+                                txtEdit.setEditable(false);
+                                confirmEdit.setDisable(true);
                             break;
 
                             case 5: 
@@ -188,10 +220,13 @@ public class EditController implements Initializable {
                             break;
                         }
                     break;
+                    
                     //überprüft, ob der OriginTyp "PrivatKunde" ist
                     case "PrivatKunde": 
+                        
                         //überprüft, welcher Index als letztes angeclickt wurde
                         switch(indexInLv){
+                            
                             //setzt den Text im Textfeld und im Label entsprechend dem Inhalt des jeweiligen Indexes
                             case 0: 
                                 labelEdit.setText("Vorname:");
@@ -214,7 +249,10 @@ public class EditController implements Initializable {
                             break;
 
                             case 4: 
-                                labelEdit.setText(pKunde.getKundenTyp());
+                                labelEdit.setText("Kundentyp, nicht änderbar!");
+                                txtEdit.setText(pKunde.getKundenTyp());
+                                txtEdit.setEditable(false);
+                                confirmEdit.setDisable(true);
                             break;
 
                             case 5: 
@@ -223,10 +261,13 @@ public class EditController implements Initializable {
                             break;
                         }
                     break;
+                    
                     //überprüft, ob der OriginTyp "Vermietung" ist
                     case "Vermietung":
+                        
                         //überprüft, welcher Index als letztes angeclickt wurde
                         switch(indexInLv){
+                            
                             //setzt den Text im TextField und Label entspechend dem Inhalt des jeweiligen Indexes
                             case 0: 
                                 dpEdit.setValue(null);
@@ -258,49 +299,63 @@ public class EditController implements Initializable {
                             break;
 
                             case 4: 
-                                labelEdit.setText("Dauer:  // nicht änderbar");
-                                //Kovertiert den double Duration in einen String
+                                labelEdit.setText("Dauer, nicht änderbar!");
+                                //Konvertiert den double Duration in einen String
                                 txtEdit.setText(verm.getDuration()+ "");
                                 //setzt das TextField auf nicht bearbeitbar
                                 txtEdit.setEditable(false);
+                                confirmEdit.setDisable(true);
                             break;
 
                             case 5: 
-                                labelEdit.setText("Kosten:  // nicht änderbar");
+                                labelEdit.setText("Kosten, nicht änderbar!");
                                 //Konvertiert den double Kosten in einen String
                                 txtEdit.setText(verm.getKosten() + "€");
                                 //setzt das TextField auf nicht bearbeitbar
                                 txtEdit.setEditable(false);
+                                confirmEdit.setDisable(true);
                             break;
                         }
                     break;
                 } 
             break;
+            
             //überprüft, ob sich die ListView im Modus "Kunden" befindet
             case "Kunden":
+                
                 //löscht den Text im TextField
                 txtEdit.clear();
+                
                 //löscht den Text im Label
                 labelEdit.setText("");
+                
                 //setzt den Kunden in verm auf den Kunden, der in lvEditChoice im Modus "Kunden" ausgewählt wurde
                 verm.setKunde(App.getKunden().get(indexInLv));
+                
                 //setzt den ListViewModus auf "Vermietung" um die ListVIew wieder mit den Eigenschaften der ausgewählten Vermietung zu füllen
                 App.setListViewModus("Vermietung");
+                
                 //ruft fillListView auf
                 fillListView();
             break;
             //überprüft, ob sich die ListView im Modus "Fahrzeuge" befindet
             case "Fahrzeuge":
+                
                 //löscht den Text im TextField
                 txtEdit.clear();
+                
                 //löoscht den Text im Label
                 labelEdit.setText("");
+                
                 //setzt das Fahrzeug in verm auf das Fahrzeug, das in lvEditChoice im Modus "Fahrzeuge" ausgewählt wurde
                 verm.setFahrzeug(App.getFahrzeuge().get(indexInLv));
+                
                 //setzt den ListViewModus auf "Vermietung" um die ListVIew wieder mit den Eigenschaften der ausgewählten Vermietung zu füllen
                 App.setListViewModus("Vermietung");
+                
                 //ruft fillListView auf
                 fillListView();
+                
             break;
         }
     }
@@ -385,7 +440,7 @@ public class EditController implements Initializable {
                     break;
 
                     case 4: 
-                        fahrz.setTyp(txtEdit.getText());
+                        //hier steht nichts, weil man FahrzeugTyp nicht ändern kann
                     break;
 
                     case 5: 
@@ -563,6 +618,7 @@ public class EditController implements Initializable {
                     
                     //überprüft, ob sich die ListView im Modus "Fahrzeuge" befindet
                     case "Fahrzeuge":
+                        
                         //füllt die ListView mit den Werten der Variablen der Objekte in der ArrayList fahrzeuge
                         for(FahrzeugModel f : App.getFahrzeuge()){
                         lvEditChoice.getItems().add("Fahrzeugtyp: " + f.getTyp() + " // Hersteller: " + f.getHersteller() + " // Modell: " + f.getModell() + " // Farbe: " + f.getFarbe() + " // Kennzeichen: " + f.getKennzeichen() + " // Stundenkosten: " + f.getStundenkosten() + " // Nummer: " + f.getFahrzeugnummer() + " // In Benutzung: " + f.getInBenutzung() + " // In Reparatur: " + f.getInReparatur());
@@ -574,8 +630,10 @@ public class EditController implements Initializable {
         }
         //löscht den Text im Label
         labelEdit.setText("");
+        
         //rufe fillListView auf
         fillListView();
+        
         //löscht den Text im TextField
         txtEdit.clear();
     }
@@ -686,12 +744,14 @@ public class EditController implements Initializable {
                     
                     //überprüft, ob sich die ListView im Modus "Fahrzeuge" befindet
                     case "Fahrzeuge":
+                        
                             //füllt die ListView mit den Werten der Variablen der Objekte aus der ArrayList fahrzeuge 
                             for(FahrzeugModel f : App.getFahrzeuge()){
                                 lvEditChoice.getItems().add("Fahrzeugtyp: " + f.getTyp() + " // Hersteller: " + f.getHersteller() + " // Modell: " + f.getModell() + " // Farbe: " + f.getFarbe() + " // Kennzeichen: " + f.getKennzeichen() + " // Stundenkosten: " + f.getStundenkosten() + "€ // Nummer: " + f.getFahrzeugnummer() + " // In Benutzung: " + f.getInBenutzung() + " // In Reparatur: " + f.getInReparatur());
                            }
                     break;
                 }
+            break;
             //überprüft, ob der OriginTyp "GeschaeftsKunde" ist
             case "GeschaeftsKunde":
 
@@ -849,8 +909,10 @@ public class EditController implements Initializable {
     }
     
     private void showFahrzeugeInView(){
+        
         //löscht alle Strings in der ListView 
         lvEditChoice.getItems().clear();
+        
         //füllt die ListView mit den Werten der Variablen der Objekte in der ArrayList fahrzeuge
         for(FahrzeugModel f : App.getFahrzeuge()){
             lvEditChoice.getItems().add("Fahrzeugtyp: " + f.getTyp() + " // Hersteller: " + f.getHersteller() + " // Modell: " + f.getModell() + " // Farbe: " + f.getFarbe() + " // Kennzeichen: " + f.getKennzeichen() + " // Stundenkosten: " + f.getStundenkosten() + " // Nummer: " + f.getFahrzeugnummer() + " // In Benutzung: " + f.getInBenutzung() + " // In Reparatur: " + f.getInReparatur());
@@ -860,22 +922,27 @@ public class EditController implements Initializable {
     }
     
     private void showKundenInView(){
+        
                 //löscht alle Strings in der ListView
                  lvEditChoice.getItems().clear();
                  
                  //füllt die ListView mit den Werten der Variablen der Objekte in der ArrayList kunden
                  for(KundeModel k : App.getKunden()){
+                     
                      //überprüft, welcher Typ der Kunde in der ArrayList ist
                      switch(k.getKundenTyp()){
+                         
                          //überprüft, ob der Kunde ein Geschäftskunde ist
                          case "Geschäftskunde":
+                             
                              //legt fest, dass g in diesem Fall gleich k ist
                             GeschaeftsKundeModel g = (GeschaeftsKundeModel) k;
                             lvEditChoice.getItems().add("Kundentyp: " + g.getKundenTyp() + " // Vorname: " + g.getVorname() + " // Nachname: " + g.getNachname() + " // Geburtsort: " + g.getGeburtsort() + " Geburtsdatum: " + g.getGeburtsdatum() + " // Arbeitsadresse: " + g.getArbeitsAdresse() + " // Arbeitstelefonnummer: " + g.getArbeitsTelefonnummer());   
                         break;
                             
                         //überprüft, ob der Kunde ein Privatkunde ist
-                        case "Privatkunde":             
+                        case "Privatkunde":          
+                            
                             //legt fest, dass p in diesem Fall gleich k ist
                             PrivatKundeModel p = (PrivatKundeModel) k;
                             lvEditChoice.getItems().add("Kundentyp: " + p.getKundenTyp() + " // Vorname: " + p.getVorname() + " // Nachname: " + p.getNachname() + " // Geburtsort: " + p.getGeburtsort() + " Geburtsdatum: " + p.getGeburtsdatum() + " // Sicherheitskontakt: " + p.getSicherheitsKontakt());

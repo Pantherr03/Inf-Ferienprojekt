@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.infferienprojekt.VermietungController">
    <children>
-      <ListView fx:id="lvVermietungDetail" layoutX="14.0" layoutY="14.0" prefHeight="320.0" prefWidth="775.0" />
+      <ListView fx:id="lvVermietungDetail" layoutX="14.0" layoutY="14.0" onMouseClicked="#selVermietungEdit" prefHeight="320.0" prefWidth="775.0" />
       <Button layoutX="14.0" layoutY="350.0" mnemonicParsing="false" onAction="#btnAddVermietung" prefHeight="50.0" prefWidth="140.0" text="Neue Vermietung">
          <font>
             <Font size="13.0" />
@@ -17,7 +17,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="170.0" layoutY="350.0" mnemonicParsing="false" onAction="#btnEditVermietung" prefHeight="50.0" prefWidth="140.0" text="Auswahl bearbeiten">
+      <Button fx:id="EditVermietung" layoutX="170.0" layoutY="350.0" mnemonicParsing="false" onAction="#btnEditVermietung" prefHeight="50.0" prefWidth="140.0" text="Auswahl bearbeiten">
          <font>
             <Font size="13.0" />
          </font>

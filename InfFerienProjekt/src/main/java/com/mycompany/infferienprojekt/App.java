@@ -18,12 +18,15 @@ import java.time.Duration;
 public class App extends Application {
 
     private static Scene scene;
+    
     //definiert die ArrayLists für Fahrzeuge, Kunden und Vermietungen
     static ArrayList<FahrzeugModel> fahrzeuge;
     static ArrayList<KundeModel> kunden;
     static ArrayList<VermietungModel> vermietungen;
+    
     //definiert den String originTyp, der in allen Controllern außer mainController genutzt wird
     static String originTyp;
+    
     //Definiert den ListViewModus für EditController wenn man von VermietungController kommt
     static String ListViewModus = "Vermietung";
 

@@ -7,7 +7,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 
 public class VermietungController implements Initializable {
 
@@ -20,9 +22,14 @@ public class VermietungController implements Initializable {
     public static VermietungModel selectedVermietung;
      //definiert den int selVermietungIndex, um leichter aus anderen Klassen auf den Index des "selectedVermietung" zugreifen zu können
     static  int selVermietungIndex;
+    //definiert den button EditVermietung, sodass man einstellen kann, wann er nutzbar wird (selVermietungEdit)
+    @FXML
+    private Button EditVermietung;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+            //setzt den EditVermietung button auf nicht nutzbar, da kein Objekt ausgewählt ist
+            EditVermietung.setDisable(true);
             //füllt die ListView lvVermietungDetail mit allen Objekten aus der ArrayList vermietungen
             for(VermietungModel v : App.getVermietungen()){
                 //setzt den Formatter format auf das Pattern "dd-MM-yyyy HH:mm"
@@ -57,6 +64,12 @@ public class VermietungController implements Initializable {
     @FXML
     private void btnHome(ActionEvent event) throws IOException {
         App.setRoot("mainVIew");
+    }
+
+    //setzt den EditVermietung button auf nutzbar, wenn auf die ListView geclickt wird
+    @FXML
+    private void selVermietungEdit(MouseEvent event) {
+        EditVermietung.setDisable(false);
     }
     
 }

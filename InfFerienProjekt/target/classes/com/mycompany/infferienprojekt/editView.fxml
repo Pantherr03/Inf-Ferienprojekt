@@ -20,7 +20,7 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <Button layoutX="209.0" layoutY="345.0" mnemonicParsing="false" onAction="#btnEditDone" prefHeight="50.0" prefWidth="140.0" text="Bestätigen">
+      <Button fx:id="confirmEdit" layoutX="209.0" layoutY="345.0" mnemonicParsing="false" onAction="#btnEditDone" prefHeight="50.0" prefWidth="140.0" text="Bestätigen">
          <font>
             <Font size="18.0" />
          </font>

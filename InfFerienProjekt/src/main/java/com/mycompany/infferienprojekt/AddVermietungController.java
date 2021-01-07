@@ -16,52 +16,67 @@ import java.time.Duration;
 
 public class AddVermietungController implements Initializable {
 
-
+    //definiert die ListViews, in denen man den Kunden und das Fahrzeug auswählen kann, den man in der neuen Vermietung nutzen möchte
     @FXML
     private ListView<String> lvFahrzeugAuswahl;
     @FXML
     private ListView<String> lvKundeAuswahl;
+    
+    //definiert die DatePicker, um Start- und Enddatum festlegen zu können
     @FXML
     private DatePicker dpStartDatum;
     @FXML
     private DatePicker dpEndDatum;
+    
+    //definiert die ChoiceBoxen, um die Uhrzeit festlegen zu können
     @FXML
     private ChoiceBox<String> choiceZeitStart;
     @FXML
     private ChoiceBox<String> choiceZeitEnde;
     
-    LocalTime TS = null;
-    LocalTime TE = null;
+    //definiert die LocalTimes TS und TE für TimeStart und TimeEnde
+    LocalTime TS;
+    LocalTime TE;
     
-    FahrzeugModel selFahrzeug = null;
-    KundeModel selKunde = null;
-    
-    @FXML
-    private DatePicker dpEnddatum;
+    //definiert das FahrzeugModel selFahrzeug und das KundeModel selKunde
+    FahrzeugModel selFahrzeug;
+    KundeModel selKunde;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //ruft fillChoiceBox auf
         fillChoiceBox();
+        //ruft fillListVIew auf
         fillListView();
     }    
-    
+    //definiert den button um in die mainView zu gelangen
     @FXML
     private void btnHome(ActionEvent event) throws IOException {
-        choiceToDateStart();
-        System.out.println(dpStartDatum.getValue() + " " + TS);
         App.setRoot("mainView");
     }
     @FXML
     private void btnAddVermietung(ActionEvent event) {
+        
+        //holt sich die Start. und Endzeit aus den choiceBoxen choiceZeitStart und choiceStartEnde
         choiceToDateStart();
         choiceToDateEnde();
+        
+        //kombiniert das Startdatum mit der Startzeit und das Enddatum mit der Endzeit um temp1 und temp2 zu bilden
         LocalDateTime temp1 = LocalDateTime.of(dpStartDatum.getValue(), TS) ; 
         LocalDateTime temp2 = LocalDateTime.of(dpEndDatum.getValue(), TE);
+        
+        //definiert die Duration duration als Zeitabstand zwischen Start- und EndLocalDateTime
         Duration duration = Duration.between(temp1, temp2);
+        
+        //konvertiert den int Dauer ins Stundenformat
         int Dauer = (int) duration.toHours();
+        
+        //fügt der ArrayList vermietungen eine neue Vermietung hinzu
         App.vermietungen.add(new VermietungModel(temp1, temp2, selKunde, selFahrzeug, Dauer, Dauer * selFahrzeug.getStundenkosten()));
-        System.out.println("Start: " + temp1 + " // Ende: " + temp2 + " // Kunde: " + selKunde.getVorname() + " " + selKunde.getNachname() + " // Typ: " + selFahrzeug.getTyp() + " // Dauer: " + Dauer + " // Kosten: " + selFahrzeug.getStundenkosten()*Dauer);
+        System.out.println("neue Vermietung erstellt");
     }
+    
+    //definiert selFahrzeug, also das Fahrzeug, welches in der ArrayList am Platz des in der ListView ausgewählten Objektes ist
     @FXML
     private void selFahrzeug(MouseEvent event) {
        int temp4 = lvFahrzeugAuswahl.getSelectionModel().getSelectedIndex();
@@ -69,13 +84,14 @@ public class AddVermietungController implements Initializable {
        
     }
 
+    //definiert selKunde, also den Kunden, welches in der ArrayList am Platz des in der ListView ausgewählten Objektes ist
     @FXML
     private void selKunde(MouseEvent event) {
         int temp4 = lvKundeAuswahl.getSelectionModel().getSelectedIndex();
         selKunde = App.kunden.get(temp4);
     }
 
-
+    //füllt die ChoiceBoxen choiceZeitStart und choiceZeitEnde mit Strings, die Tageszeiten darstellen
     private void fillChoiceBox(){
         choiceZeitStart.getItems().add("01:00");
         choiceZeitStart.getItems().add("02:00");
@@ -130,23 +146,36 @@ public class AddVermietungController implements Initializable {
     }
     
     private void fillListView(){
+        
+        //füllt die ListView lvFahrzeuge mit den Variablen der verschiedenen Objekte in der ArrayList fahrzeuge
         for(FahrzeugModel f : App.getFahrzeuge()){
             lvFahrzeugAuswahl.getItems().add("Fahrzeugtyp: " + f.getTyp() + " // Hersteller: " + f.getHersteller() + " // Modell: " + f.getModell() + " // Farbe: " + f.getFarbe() + " // Kennzeichen: " + f.getKennzeichen() + " // Stundenkosten: " + f.getStundenkosten() + " // Nummer: " + f.getFahrzeugnummer() + " // In Benutzung: " + f.getInBenutzung() + " // In Reparatur: " + f.getInReparatur());
         }
+        //füllt die ListView lvKunden mit den Variablen der verschiedenen Objekte in der ArrayList kunden
         for(KundeModel k : App.getKunden()){
+            
+            //überprüft, ob der Kundentyp "Geschäftskunde" ist
             if(k.getKundenTyp().equals("Geschäftskunde")){
                      
+                    //definiert, dass g in diesem Fall gleich k ist
                     GeschaeftsKundeModel g = (GeschaeftsKundeModel) k;
+                    
+                    //fügt die Variablen des GeschaeftsKundeModel g zur ListView hinzu
                     lvKundeAuswahl.getItems().add("Kundentyp: " + g.getKundenTyp() + " // Vorname: " + g.getVorname() + " // Nachname: " + g.getNachname() + " // Geburtsort: " + g.getGeburtsort() + " Geburtsdatum: " + g.getGeburtsdatum() + " // Arbeitsadresse: " + g.getArbeitsAdresse() + " // Arbeitstelefonnummer: " + g.getArbeitsTelefonnummer());
             }
+            //überprüft, ob der Kundentyp "Privatkunde" ist
             else if(k.getKundenTyp().equals("Privatkunde")){
                      
+                        //definiert, dass p in diesem Fall gleich k ist
                          PrivatKundeModel p = (PrivatKundeModel) k;
+                         
+                         //fügt die Variablen des PrivatKundeModel p zur ListView hinzu
                          lvKundeAuswahl.getItems().add("Kundentyp: " + p.getKundenTyp() + " // Vorname: " + p.getVorname() + " // Nachname: " + p.getNachname() + " // Geburtsort: " + p.getGeburtsort() + " Geburtsdatum: " + p.getGeburtsdatum() + " // Sicherheitskontakt: " + p.getSicherheitsKontakt());
             }
         }
     }
-
+    
+    //setzt die LocalTime von TS entsprechend der Auswahl in choiceZeitStart
     private void choiceToDateStart(){
         switch(choiceZeitStart.getValue()){
             case "01:00":
@@ -224,6 +253,7 @@ public class AddVermietungController implements Initializable {
         } 
     }
   
+    //setzt die LocalTime von TE entsprechend der Auswahl in choiceZeitEnde
     private void choiceToDateEnde(){
         switch(choiceZeitEnde.getValue()){
             case "01:00":

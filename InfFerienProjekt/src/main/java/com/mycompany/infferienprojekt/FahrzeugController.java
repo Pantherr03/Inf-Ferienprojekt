@@ -16,18 +16,23 @@ public class FahrzeugController implements Initializable {
     //in der lvFahrzeuge werden die Variablen der Objekte der ArrayList fahrzeuge abgebildet
     @FXML
     private ListView<String> lvFahrzeugDetail;
+    
     //definiert die Variable selectedFahrzeug, die in btnEditFahrzeug genutzt wird und in EditController aufgerufen wird
     static FahrzeugModel selectedFahrzeug;
-    @FXML
+    
     //definiert den button EditFahrzeug, sodass man einstellen kann, wann er nutzbar wird (selFahrzeugEdit)
+    @FXML
     private Button EditFahrzeug;
+    
     //definiert den int selFahrzeugIndex, um leichter aus anderen Klassen auf den Index des "selectedFahrzeug" zugreifen zu können
     static int selFahrzeugIndex;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         //setzt den EditFahrzeug button auf nicht nutzbar, da kein Objekt ausgewählt ist
         EditFahrzeug.setDisable(true);
+        
         //füllt die ListVIew mit den Werten der Objekte in der ArrayList fahrzeuge in App
         for(FahrzeugModel f : App.getFahrzeuge()){
              lvFahrzeugDetail.getItems().add("Fahrzeugtyp: " + f.getTyp() + " // Hersteller: " + f.getHersteller() + " // Modell: " + f.getModell() + " // Farbe: " + f.getFarbe() + " // Kennzeichen: " + f.getKennzeichen() + " // Stundenkosten: " + f.getStundenkosten() + " // Nummer: " + f.getFahrzeugnummer() + " // In Benutzung: " + f.getInBenutzung() + " // In Reparatur: " + f.getInReparatur());
@@ -49,10 +54,13 @@ public class FahrzeugController implements Initializable {
 
     @FXML
     private void btnEditFahrzeug(ActionEvent event) throws IOException {
+        
         //setzt selFahrzeugIndex auf den Index des in der ListView ausgewählten Objektes
         selFahrzeugIndex = lvFahrzeugDetail.getSelectionModel().getSelectedIndex();
+        
         //holt sich das "selectedFahrzeug" aus der ArrayList fahrzeuge
         selectedFahrzeug = App.fahrzeuge.get(selFahrzeugIndex);
+        
         //setzt die Origin auf Fahrzeug, um in EditController zu wissen, dass man davor in FahrzeugController war und deswegen selectedFahrzeug aufrufen muss
         App.setOriginTyp("Fahrzeug");
         App.setRoot("editView");
